@@ -298,19 +298,30 @@
         <span>Input Depth</span>
         <span>Standard FT</span>
         <span>FT + Align.</span>
-        <span>FlowChef</span>
-        <span class="ours-label">FlowBender (Ours)</span>
+        <span class="ours-label">Ours (Zero-Order)</span>
+        <span class="ours-label">Ours (First-Order)</span>
       </div>
-      <!-- ✦ Replace with: assets/images/depth_qualitative.png -->
-      <div class="placeholder comparison">
-        <i class="fas fa-image"></i>
-        <p>Depth → RGB comparison grid</p>
-        <code>assets/images/depth_qualitative.png</code>
+      <div class="comparison-grid">
+        <div class="comparison-row">
+          <img src="assets/images/img2img/t1_r1_condition.png" alt="Input depth, example 1">
+          <img src="assets/images/img2img/t1_r1_std_ft.png"   alt="Standard FT, example 1">
+          <img src="assets/images/img2img/t1_r1_ft_align.png" alt="FT + Align, example 1">
+          <img src="assets/images/img2img/t1_r1_ours_zero.png"  alt="Ours Zero-Order, example 1" class="ours-img">
+          <img src="assets/images/img2img/t1_r1_ours_first.png" alt="Ours First-Order, example 1" class="ours-img">
+        </div>
+        <div class="comparison-sep"></div>
+        <div class="comparison-row">
+          <img src="assets/images/img2img/t1_r2_condition.png" alt="Input depth, example 2">
+          <img src="assets/images/img2img/t1_r2_std_ft.png"   alt="Standard FT, example 2">
+          <img src="assets/images/img2img/t1_r2_ft_align.png" alt="FT + Align, example 2">
+          <img src="assets/images/img2img/t1_r2_ours_zero.png"  alt="Ours Zero-Order, example 2" class="ours-img">
+          <img src="assets/images/img2img/t1_r2_ours_first.png" alt="Ours First-Order, example 2" class="ours-img">
+        </div>
       </div>
       <p class="fig-caption">
         <strong>Depth → RGB.</strong> FlowBender produces images whose re-extracted depth matches
         the input more faithfully while maintaining photorealism — a direct result of the
-        gradient-based feedback from the depth predictor.
+        gradient-based feedback from the depth predictor. Green borders mark our method's outputs.
       </p>
     </div>
 
@@ -320,15 +331,31 @@
         <span>Input Edges</span>
         <span>Standard FT</span>
         <span>FT + Align.</span>
-        <span>FlowChef</span>
-        <span class="ours-label">FlowBender (Ours)</span>
+        <span class="ours-label">Ours (Zero-Order)</span>
+        <span class="ours-label">Ours (First-Order)</span>
       </div>
-      <!-- ✦ Replace with: assets/images/edge_qualitative.png -->
-      <div class="placeholder comparison">
-        <i class="fas fa-image"></i>
-        <p>Edge → RGB comparison grid</p>
-        <code>assets/images/edge_qualitative.png</code>
+      <div class="comparison-grid">
+        <div class="comparison-row">
+          <img src="assets/images/img2img/t2_r1_condition.png" alt="Input edges, example 1">
+          <img src="assets/images/img2img/t2_r1_std_ft.png"   alt="Standard FT, example 1">
+          <img src="assets/images/img2img/t2_r1_ft_align.png" alt="FT + Align, example 1">
+          <img src="assets/images/img2img/t2_r1_ours_zero.png"  alt="Ours Zero-Order, example 1" class="ours-img">
+          <img src="assets/images/img2img/t2_r1_ours_first.png" alt="Ours First-Order, example 1" class="ours-img">
+        </div>
+        <div class="comparison-sep"></div>
+        <div class="comparison-row">
+          <img src="assets/images/img2img/t2_r2_condition.png" alt="Input edges, example 2">
+          <img src="assets/images/img2img/t2_r2_std_ft.png"   alt="Standard FT, example 2">
+          <img src="assets/images/img2img/t2_r2_ft_align.png" alt="FT + Align, example 2">
+          <img src="assets/images/img2img/t2_r2_ours_zero.png"  alt="Ours Zero-Order, example 2" class="ours-img">
+          <img src="assets/images/img2img/t2_r2_ours_first.png" alt="Ours First-Order, example 2" class="ours-img">
+        </div>
       </div>
+      <p class="fig-caption">
+        <strong>Edge → RGB.</strong> The same feedback-aware training generalizes to edge maps.
+        FlowBender's outputs faithfully reproduce the structural contours of the input edge image
+        while generating photorealistic textures and shading.
+      </p>
     </div>
 
     <!-- Super-resolution -->

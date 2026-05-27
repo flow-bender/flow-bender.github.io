@@ -527,6 +527,39 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
 }
 
 /* ================================================================
+   COMPARISON GRID (image-to-image results)
+================================================================ */
+.comparison-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comparison-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.comparison-row img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.comparison-row img.ours-img {
+  outline: 2.5px solid var(--ours);
+  outline-offset: -1px;
+}
+
+.comparison-sep {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+/* ================================================================
    VIDEO GRID
 ================================================================ */
 .video-grid {
@@ -641,6 +674,8 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
   .method-steps { grid-template-columns: 1fr; }
   .video-grid   { grid-template-columns: 1fr; }
   .col-labels   { display: none; }
+  .comparison-grid { overflow-x: auto; }
+  .comparison-row  { min-width: 600px; }
   .hero         { padding: 3.5rem 0 3rem; }
   .section      { padding: 3.5rem 0; }
 }
