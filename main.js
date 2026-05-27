@@ -1,47 +1,16 @@
 'use strict';
 
-// ── Motivation stepper ───────────────────────────────────────────
-(function () {
-  const pills    = Array.from(document.querySelectorAll('.step-pill'));
-  const panels   = Array.from(document.querySelectorAll('.step-panel'));
-  const connectors = Array.from(document.querySelectorAll('.step-connector'));
-  const prevBtn  = document.getElementById('step-prev');
-  const nextBtn  = document.getElementById('step-next');
-  const counter  = document.getElementById('step-current');
-  const total    = panels.length;
-  let current    = 0;
-
-  function goTo(n) {
-    if (n < 0 || n >= total) return;
-
-    panels[current].classList.remove('active');
-    pills[current].classList.remove('active');
-    current = n;
-    panels[current].classList.add('active');
-    pills[current].classList.add('active');
-
-    // fill connectors to the left of active step
-    connectors.forEach((c, i) => c.classList.toggle('filled', i < current));
-
-    counter.textContent = current + 1;
-    prevBtn.disabled = current === 0;
-
-    // Last step: next button becomes green cue
-    if (current === total - 1) {
-      nextBtn.disabled = true;
-      nextBtn.classList.add('last');
-    } else {
-      nextBtn.disabled = false;
-      nextBtn.classList.remove('last');
+// ── Scroll-reveal ────────────────────────────────────────────────
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      revealObs.unobserve(entry.target);
     }
-  }
+  });
+}, { threshold: 0.1 });
 
-  pills.forEach((pill, i) => pill.addEventListener('click', () => goTo(i)));
-  prevBtn?.addEventListener('click', () => goTo(current - 1));
-  nextBtn?.addEventListener('click', () => goTo(current + 1));
-
-  goTo(0); // init state
-})();
+document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObs.observe(el));
 
 // ── Tab switching ────────────────────────────────────────────────
 document.querySelectorAll('.tab').forEach(tab => {

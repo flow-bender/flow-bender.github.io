@@ -295,173 +295,119 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
 }
 
 /* ================================================================
-   MOTIVATION STEPPER
+   MOTIVATION — SCROLL STORY
 ================================================================ */
-.stepper { margin-top: 0; }
-
-/* Progress pills row */
-.stepper-nav {
+.story {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  margin-bottom: 2.25rem;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  padding-bottom: 4px;
+  flex-direction: column;
+  gap: 6rem;
 }
 
-.step-connector {
-  flex: 1;
-  max-width: 64px;
-  height: 2px;
-  background: var(--border);
-  transition: background 0.3s;
+.story-step {}
+
+/* Two-column layout for steps 1, 2, 4 */
+.story-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
 }
 
-.step-pill {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.9rem;
-  border-radius: 100px;
-  border: 2px solid var(--border);
-  background: var(--bg);
-  color: var(--text-muted);
-  font-family: var(--font);
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
-  flex-shrink: 0;
+.story-fig { margin: 0; }
+.story-fig img {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  background: #fff;
 }
 
-.pill-num {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--border);
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Step tag: "01", "02" … */
+.story-tag {
+  display: inline-block;
   font-size: 0.7rem;
   font-weight: 700;
-  transition: all 0.2s;
-}
-
-.step-pill:hover { border-color: var(--accent); color: var(--accent); }
-.step-pill:hover .pill-num { background: var(--accent-tint); color: var(--accent); }
-
-.step-pill.active {
-  border-color: var(--accent);
+  letter-spacing: 0.1em;
   color: var(--accent);
   background: var(--accent-tint);
+  border-radius: 4px;
+  padding: 0.2rem 0.55rem;
+  margin-bottom: 0.65rem;
 }
-.step-pill.active .pill-num {
-  background: var(--accent);
-  color: #fff;
-}
+.story-tag.ours { color: var(--ours); background: #d1fae5; }
 
-/* FlowBender step gets green accent */
-.step-pill.highlight { border-color: var(--border); }
-.step-pill.highlight:hover { border-color: var(--ours); color: var(--ours); }
-.step-pill.highlight:hover .pill-num { background: #d1fae5; color: var(--ours); }
-.step-pill.highlight.active {
-  border-color: var(--ours);
-  color: var(--ours);
-  background: #d1fae5;
-}
-.step-pill.highlight.active .pill-num {
-  background: var(--ours);
-  color: #fff;
-}
-
-/* Connector fills when step to its left is active */
-.step-connector.filled { background: var(--accent); }
-
-/* Panels */
-.stepper-body { position: relative; }
-
-.step-panel { display: none; }
-.step-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-
-.step-figure { margin: 0; }
-.step-figure img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); background: #fff; }
-
-/* Narrow fig = single panel (square-ish) */
-.narrow-fig { max-width: 380px; margin-left: auto; margin-right: auto; }
-
-/* Wide fig = 3-panel guidance scales strip — spans full width */
-.step-panel:has(.wide-fig) {
-  grid-template-columns: 1fr;
-}
-.step-panel:has(.wide-fig) .step-text { max-width: 640px; margin: 0 auto; text-align: center; }
-.wide-fig { max-width: 720px; margin: 0 auto 1.5rem; }
-
-.step-text h3 {
-  font-size: 1.15rem;
+.story-text h3 {
+  font-size: 1.2rem;
   font-weight: 700;
-  margin-bottom: 0.6rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.7rem;
   color: var(--text);
 }
-.step-text p {
-  font-size: 0.925rem;
+.story-text p {
+  font-size: 0.95rem;
   color: var(--text-muted);
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
-/* Nav row */
-.stepper-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 2rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--border);
+/* Step 4: FlowBender — green headline */
+.story-ours .story-text h3 { color: var(--ours); }
+
+/* Guidance step — centered header + 3-col grid */
+.story-guidance-hdr {
+  text-align: center;
+  margin-bottom: 2.25rem;
+}
+.story-guidance-hdr h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.65rem;
+}
+.story-guidance-hdr p {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
 }
 
-.step-counter {
-  font-size: 0.85rem;
+.guidance-trio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.guidance-item img {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  background: #fff;
+}
+.guidance-cap {
+  text-align: center;
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
   font-weight: 500;
 }
 
-.step-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.5rem 1.1rem;
-  border-radius: 8px;
-  border: 1.5px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: var(--font);
-  transition: all 0.15s;
+/* Scroll-reveal animation */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
 }
-.step-btn:hover:not(:disabled) {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-tint);
-}
-.step-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-
-/* Last step: Next button turns green */
-.step-btn.next-btn.last {
-  border-color: var(--ours);
-  color: var(--ours);
-  background: #d1fae5;
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Responsive */
 @media (max-width: 680px) {
-  .step-panel.active { grid-template-columns: 1fr; gap: 1.5rem; }
-  .pill-label { display: none; }
-  .step-pill { padding: 0.4rem; }
+  .story-inner      { grid-template-columns: 1fr; gap: 1.75rem; }
+  .story-flip .story-inner { direction: ltr; }
+  .guidance-trio    { grid-template-columns: 1fr; }
+  .story           { gap: 4rem; }
 }
 
 /* ================================================================

@@ -123,119 +123,95 @@
 <!-- ================================================================
      MOTIVATION — 2D TOY WALKTHROUGH
 ================================================================ -->
-<section id="motivation" class="section">
+<section id="motivation" class="section alt">
   <div class="container">
     <h2 class="section-heading">The Problem, Step by Step</h2>
     <p class="section-lead">
-      A 2D toy example makes the gap between existing paradigms concrete — and shows what
+      A 2D toy walks through why existing paradigms fall short — and sets up what
       a closed-loop correction policy can achieve.
     </p>
 
-    <div class="stepper">
+    <div class="story">
 
-      <!-- Step progress indicator -->
-      <div class="stepper-nav" role="tablist">
-        <button class="step-pill active" data-step="0" role="tab">
-          <span class="pill-num">1</span>
-          <span class="pill-label">Goal</span>
-        </button>
-        <div class="step-connector"></div>
-        <button class="step-pill" data-step="1" role="tab">
-          <span class="pill-num">2</span>
-          <span class="pill-label">Standard FM</span>
-        </button>
-        <div class="step-connector"></div>
-        <button class="step-pill" data-step="2" role="tab">
-          <span class="pill-num">3</span>
-          <span class="pill-label">Guidance</span>
-        </button>
-        <div class="step-connector"></div>
-        <button class="step-pill highlight" data-step="3" role="tab">
-          <span class="pill-num">4</span>
-          <span class="pill-label">FlowBender</span>
-        </button>
-      </div>
-
-      <!-- Panels -->
-      <div class="stepper-body">
-
-        <div class="step-panel active" data-step="0">
-          <figure class="step-figure narrow-fig">
+      <!-- 1. Ground Truth -->
+      <div class="story-step reveal-on-scroll">
+        <div class="story-inner">
+          <figure class="story-fig">
             <img src="assets/images/toy_gt.png" alt="Ground-truth spiral distribution">
           </figure>
-          <div class="step-text">
+          <div class="story-text">
+            <span class="story-tag">01</span>
             <h3>The Goal</h3>
-            <p>
-              The target distribution is a multi-arm spiral (shown by color-coded arcs).
-              Given a measurement <strong>y = H(x)</strong> that identifies which arm a
-              sample belongs to, an ideal conditional model should generate samples that
-              lie precisely on the correct arc — preserving the full shape and spread of
-              the posterior.
-            </p>
+            <p>The target is a multi-arm spiral. A measurement <strong>y&thinsp;=&thinsp;H(x)</strong>
+            identifies which arm a sample belongs to. An ideal conditional model should cover
+            each arc fully — generating diverse samples that lie precisely on the correct structure.</p>
           </div>
         </div>
-
-        <div class="step-panel" data-step="1">
-          <figure class="step-figure narrow-fig">
-            <img src="assets/images/toy_stdcfm.png" alt="Standard conditional flow matching results">
-          </figure>
-          <div class="step-text">
-            <h3>Standard Conditional FM Falls Short</h3>
-            <p>
-              A model fine-tuned on supervised pairs learns to approximate the conditional
-              distribution statistically, but is never asked to verify its own output
-              against the constraint. At inference, individual trajectories overshoot or
-              drift off the spiral — each sample misses the constraint manifold by a
-              measurable margin (see inset).
-            </p>
-          </div>
-        </div>
-
-        <div class="step-panel" data-step="2">
-          <figure class="step-figure wide-fig">
-            <img src="assets/images/2d_toy_guidance_scales.png" alt="Inference-time guidance at three strengths">
-          </figure>
-          <div class="step-text">
-            <h3>Guidance: A Dial With No Good Setting</h3>
-            <p>
-              Inference-time guidance pushes trajectories toward the constraint using the
-              forward operator's gradient. But the guidance scale must be hand-tuned: too
-              weak and samples still miss the spiral; too strong and samples collapse onto
-              it, destroying the diversity of the true posterior. There is no setting that
-              achieves both fidelity <em>and</em> plausibility.
-            </p>
-          </div>
-        </div>
-
-        <div class="step-panel" data-step="3">
-          <figure class="step-figure narrow-fig">
-            <img src="assets/images/toy_flowbender.png" alt="FlowBender results on the spiral">
-          </figure>
-          <div class="step-text">
-            <h3>FlowBender: Both, Not Either</h3>
-            <p>
-              Trained to consume its own alignment error as input, FlowBender learns a
-              nonlinear correction policy — not a scalar guidance weight. Samples land
-              precisely on each spiral arm while covering the full arc. No guidance
-              strength to tune, no trade-off to navigate.
-            </p>
-          </div>
-        </div>
-
-      </div><!-- /stepper-body -->
-
-      <!-- Prev / Next -->
-      <div class="stepper-footer">
-        <button class="step-btn prev-btn" id="step-prev" disabled>
-          <i class="fas fa-arrow-left"></i> Prev
-        </button>
-        <span class="step-counter"><span id="step-current">1</span> / 4</span>
-        <button class="step-btn next-btn" id="step-next">
-          Next <i class="fas fa-arrow-right"></i>
-        </button>
       </div>
 
-    </div><!-- /stepper -->
+      <!-- 2. Standard Conditional FM -->
+      <div class="story-step reveal-on-scroll story-flip">
+        <div class="story-inner">
+          <div class="story-text">
+            <span class="story-tag">02</span>
+            <h3>Standard Conditional FM Misses the Constraint</h3>
+            <p>A model fine-tuned on supervised pairs learns to approximate the conditional
+            distribution statistically, but is never asked to verify its output. Samples roughly
+            follow the spiral shape but don't commit — each arm scatters around the true arc
+            instead of lying precisely on it.</p>
+          </div>
+          <figure class="story-fig">
+            <img src="assets/images/toy_conditional.png" alt="Standard conditional FM results">
+          </figure>
+        </div>
+      </div>
+
+      <!-- 3. Guidance -->
+      <div class="story-step reveal-on-scroll">
+        <div class="story-guidance">
+          <div class="story-guidance-hdr">
+            <span class="story-tag">03</span>
+            <h3>Inference-Time Guidance Has No Good Setting</h3>
+            <p>Adding guidance steers trajectories toward the constraint using the operator's
+            gradient — but the correction strength must be hand-tuned. At every scale something
+            breaks: too weak and samples barely improve; stronger settings push samples into
+            the wrong spiral arms entirely.</p>
+          </div>
+          <div class="guidance-trio">
+            <div class="guidance-item">
+              <img src="assets/images/toy_guidance_weak.png" alt="Guidance α=0.5">
+              <p class="guidance-cap">α&thinsp;=&thinsp;0.5 &mdash; too weak</p>
+            </div>
+            <div class="guidance-item">
+              <img src="assets/images/toy_guidance_med.png" alt="Guidance α=2.0">
+              <p class="guidance-cap">α&thinsp;=&thinsp;2.0 &mdash; over-corrected</p>
+            </div>
+            <div class="guidance-item">
+              <img src="assets/images/toy_guidance_strong.png" alt="Guidance α=4.0">
+              <p class="guidance-cap">α&thinsp;=&thinsp;4.0 &mdash; structure collapses</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. FlowBender -->
+      <div class="story-step reveal-on-scroll story-ours">
+        <div class="story-inner">
+          <figure class="story-fig">
+            <img src="assets/images/toy_fa_cfm.png" alt="FlowBender results">
+          </figure>
+          <div class="story-text">
+            <span class="story-tag ours">04</span>
+            <h3>FlowBender: Both, Not Either</h3>
+            <p>Trained to read its own alignment error as input, FlowBender learns a nonlinear
+            correction policy — not a scalar guidance weight. Every arm lands tightly on its arc
+            while covering the full extent of the posterior. Fidelity and plausibility,
+            simultaneously, with nothing to tune.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /story -->
   </div>
 </section>
 
@@ -301,20 +277,6 @@
       </div>
     </div>
 
-    <!-- 2D toy -->
-    <div class="subsection">
-      <h3 class="sub-heading">2D Toy Illustration</h3>
-      <p class="sub-lead">
-        On a 2D Gaussian toy problem we visualize how the feedback signal steers denoising
-        trajectories onto the constraint manifold while preserving sample diversity.
-      </p>
-      <!-- ✦ Replace with: assets/images/2d_toy.png (2d_toy_samples_and_traj.pdf → PNG) -->
-      <div class="placeholder wide">
-        <i class="fas fa-chart-scatter"></i>
-        <p>2D toy — samples and trajectories</p>
-        <code>assets/images/2d_toy.png</code>
-      </div>
-    </div>
 
   </div>
 </section>
