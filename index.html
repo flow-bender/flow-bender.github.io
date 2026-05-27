@@ -428,71 +428,188 @@
 <!-- ================================================================
      RESULTS: 3D TEXTURING
 ================================================================ -->
-<section id="texturing-results" class="section">
+<section id="texturing-results" class="section alt">
   <div class="container">
     <h2 class="section-heading">Results: 3D Mesh Texturing</h2>
     <p class="section-lead">
       We fine-tune TRELLIS-2 with FlowBender's feedback-aware training on 3D PBR texture
-      generation, evaluated on ObjaverseXL and Toys4K.
+      generation, evaluated on ObjaverseXL and Toys4K. <em>Ours</em> refers to the x̂<sub>1</sub>
+      feedback variant.
     </p>
 
+    <!-- ── Subsection 1: Condition vs. re-render ─────────────────── -->
     <div class="subsection">
-      <h3 class="sub-heading">ObjaverseXL</h3>
-      <!-- ✦ Replace with: assets/images/qual_objaverse.png -->
-      <div class="placeholder comparison">
-        <i class="fas fa-cube"></i>
-        <p>ObjaverseXL qualitative comparison</p>
-        <code>assets/images/qual_objaverse.png</code>
-      </div>
-    </div>
-
-    <div class="subsection">
-      <h3 class="sub-heading">Toys4K</h3>
-      <!-- ✦ Replace with: assets/images/qual_toys4k.png -->
-      <div class="placeholder comparison">
-        <i class="fas fa-cube"></i>
-        <p>Toys4K qualitative comparison</p>
-        <code>assets/images/qual_toys4k.png</code>
-      </div>
-    </div>
-
-    <div class="subsection">
-      <h3 class="sub-heading">Multi-View Turntable Comparison</h3>
+      <h3 class="sub-heading">Condition vs. Re-render</h3>
       <p class="sub-lead">
-        Looping renders comparing Standard FT against FlowBender across 360° viewpoints,
-        demonstrating consistent texture coherence under the closed-loop correction.
+        Each row shows the input condition image alongside a re-rendered view of the generated
+        texture from each method.
       </p>
-      <div class="video-grid">
-        <div class="video-col">
-          <p class="vid-label">Standard FT</p>
-          <!-- ✦ Replace with: assets/videos/baseline_turntable.mp4 -->
-          <div class="placeholder video">
-            <i class="fas fa-video"></i>
-            <p>Baseline turntable</p>
-            <code>assets/videos/baseline_turntable.mp4</code>
-          </div>
-          <!--
-          <video autoplay loop muted playsinline>
-            <source src="assets/videos/baseline_turntable.mp4" type="video/mp4">
-          </video>
-          -->
+
+      <!-- ObjaverseXL -->
+      <div class="dataset-block">
+        <span class="dataset-tag">ObjaverseXL</span>
+        <div class="col-labels cols-5">
+          <span>Condition</span>
+          <span class="ours-label">Ours</span>
+          <span>Standard FT</span>
+          <span>FT + ℒ<sub>align</sub></span>
+          <span>IT Guidance</span>
         </div>
-        <div class="video-col">
-          <p class="vid-label ours">FlowBender (Ours)</p>
-          <!-- ✦ Replace with: assets/videos/ours_turntable.mp4 -->
-          <div class="placeholder video">
-            <i class="fas fa-video"></i>
-            <p>FlowBender turntable</p>
-            <code>assets/videos/ours_turntable.mp4</code>
+        <div class="comparison-grid">
+          <div class="comparison-row c5">
+            <img src="assets/images/3d/objaverse/e1_condition.png"   alt="Condition, example 1">
+            <img src="assets/images/3d/objaverse/e1_ours.png"        alt="Ours, example 1" class="ours-img">
+            <img src="assets/images/3d/objaverse/e1_std_ft.png"      alt="Standard FT, example 1">
+            <img src="assets/images/3d/objaverse/e1_ft_align.png"    alt="FT+align, example 1">
+            <img src="assets/images/3d/objaverse/e1_it_guidance.png" alt="IT Guidance, example 1">
           </div>
-          <!--
-          <video autoplay loop muted playsinline>
-            <source src="assets/videos/ours_turntable.mp4" type="video/mp4">
-          </video>
-          -->
+          <div class="comparison-sep"></div>
+          <div class="comparison-row c5">
+            <img src="assets/images/3d/objaverse/e2_condition.png"   alt="Condition, example 2">
+            <img src="assets/images/3d/objaverse/e2_ours.png"        alt="Ours, example 2" class="ours-img">
+            <img src="assets/images/3d/objaverse/e2_std_ft.png"      alt="Standard FT, example 2">
+            <img src="assets/images/3d/objaverse/e2_ft_align.png"    alt="FT+align, example 2">
+            <img src="assets/images/3d/objaverse/e2_it_guidance.png" alt="IT Guidance, example 2">
+          </div>
+          <div class="comparison-sep"></div>
+          <div class="comparison-row c5">
+            <img src="assets/images/3d/objaverse/e3_condition.png"   alt="Condition, example 3">
+            <img src="assets/images/3d/objaverse/e3_ours.png"        alt="Ours, example 3" class="ours-img">
+            <img src="assets/images/3d/objaverse/e3_std_ft.png"      alt="Standard FT, example 3">
+            <img src="assets/images/3d/objaverse/e3_ft_align.png"    alt="FT+align, example 3">
+            <img src="assets/images/3d/objaverse/e3_it_guidance.png" alt="IT Guidance, example 3">
+          </div>
+          <div class="comparison-sep"></div>
+          <div class="comparison-row c5">
+            <img src="assets/images/3d/objaverse/e4_condition.png"   alt="Condition, example 4">
+            <img src="assets/images/3d/objaverse/e4_ours.png"        alt="Ours, example 4" class="ours-img">
+            <img src="assets/images/3d/objaverse/e4_std_ft.png"      alt="Standard FT, example 4">
+            <img src="assets/images/3d/objaverse/e4_ft_align.png"    alt="FT+align, example 4">
+            <img src="assets/images/3d/objaverse/e4_it_guidance.png" alt="IT Guidance, example 4">
+          </div>
         </div>
       </div>
-    </div>
+
+      <!-- Toys4K -->
+      <div class="dataset-block">
+        <span class="dataset-tag">Toys4K</span>
+        <div class="col-labels cols-5">
+          <span>Condition</span>
+          <span class="ours-label">Ours</span>
+          <span>Standard FT</span>
+          <span>FT + ℒ<sub>align</sub></span>
+          <span>IT Guidance</span>
+        </div>
+        <div class="comparison-grid">
+          <div class="comparison-row c5">
+            <img src="assets/images/3d/toys4k/e1_condition.png"   alt="Condition, example 1">
+            <img src="assets/images/3d/toys4k/e1_ours.png"        alt="Ours, example 1" class="ours-img">
+            <img src="assets/images/3d/toys4k/e1_std_ft.png"      alt="Standard FT, example 1">
+            <img src="assets/images/3d/toys4k/e1_ft_align.png"    alt="FT+align, example 1">
+            <img src="assets/images/3d/toys4k/e1_it_guidance.png" alt="IT Guidance, example 1">
+          </div>
+          <div class="comparison-sep"></div>
+          <div class="comparison-row c5">
+            <img src="assets/images/3d/toys4k/e2_condition.png"   alt="Condition, example 2">
+            <img src="assets/images/3d/toys4k/e2_ours.png"        alt="Ours, example 2" class="ours-img">
+            <img src="assets/images/3d/toys4k/e2_std_ft.png"      alt="Standard FT, example 2">
+            <img src="assets/images/3d/toys4k/e2_ft_align.png"    alt="FT+align, example 2">
+            <img src="assets/images/3d/toys4k/e2_it_guidance.png" alt="IT Guidance, example 2">
+          </div>
+          <div class="comparison-sep"></div>
+          <div class="comparison-row c5">
+            <img src="assets/images/3d/toys4k/e3_condition.png"   alt="Condition, example 3">
+            <img src="assets/images/3d/toys4k/e3_ours.png"        alt="Ours, example 3" class="ours-img">
+            <img src="assets/images/3d/toys4k/e3_std_ft.png"      alt="Standard FT, example 3">
+            <img src="assets/images/3d/toys4k/e3_ft_align.png"    alt="FT+align, example 3">
+            <img src="assets/images/3d/toys4k/e3_it_guidance.png" alt="IT Guidance, example 3">
+          </div>
+          <div class="comparison-sep"></div>
+          <div class="comparison-row c5">
+            <img src="assets/images/3d/toys4k/e4_condition.png"   alt="Condition, example 4">
+            <img src="assets/images/3d/toys4k/e4_ours.png"        alt="Ours, example 4" class="ours-img">
+            <img src="assets/images/3d/toys4k/e4_std_ft.png"      alt="Standard FT, example 4">
+            <img src="assets/images/3d/toys4k/e4_ft_align.png"    alt="FT+align, example 4">
+            <img src="assets/images/3d/toys4k/e4_it_guidance.png" alt="IT Guidance, example 4">
+          </div>
+        </div>
+      </div>
+    </div><!-- /subsection 1 -->
+
+    <!-- ── Subsection 2: 3D turntable video comparison ───────────── -->
+    <div class="subsection">
+      <h3 class="sub-heading">3D Turntable Comparison</h3>
+      <p class="sub-lead">
+        360° render loops comparing methods on the same asset.
+        Click the play button on each to start.
+      </p>
+
+      <!-- ✦ Each .vid-row = one 3D object: condition image + 3 looping renders -->
+      <!-- ✦ Replace placeholder divs with <video autoplay loop muted playsinline> when ready -->
+
+      <div class="vid-row">
+        <div>
+          <img class="vid-cond-img" src="assets/images/3d/objaverse/e1_condition.png" alt="Condition">
+          <p class="vid-label">Condition</p>
+        </div>
+        <div>
+          <div class="vid-inner">
+            <!-- ✦ Replace with: assets/videos/objaverse_e1_ours.mp4 -->
+            <div class="placeholder video"><i class="fas fa-cube"></i><p>Ours</p><code>assets/videos/objaverse_e1_ours.mp4</code></div>
+            <button class="play-overlay" aria-label="Play Ours"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          </div>
+          <p class="vid-label ours">Ours</p>
+        </div>
+        <div>
+          <div class="vid-inner">
+            <!-- ✦ Replace with: assets/videos/objaverse_e1_std_ft.mp4 -->
+            <div class="placeholder video"><i class="fas fa-cube"></i><p>Standard FT</p><code>assets/videos/objaverse_e1_std_ft.mp4</code></div>
+            <button class="play-overlay" aria-label="Play Standard FT"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          </div>
+          <p class="vid-label">Standard FT</p>
+        </div>
+        <div>
+          <div class="vid-inner">
+            <!-- ✦ Replace with: assets/videos/objaverse_e1_it_guidance.mp4 -->
+            <div class="placeholder video"><i class="fas fa-cube"></i><p>IT Guidance</p><code>assets/videos/objaverse_e1_it_guidance.mp4</code></div>
+            <button class="play-overlay" aria-label="Play IT Guidance"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          </div>
+          <p class="vid-label">IT Guidance</p>
+        </div>
+      </div>
+
+      <div class="vid-row">
+        <div>
+          <img class="vid-cond-img" src="assets/images/3d/toys4k/e1_condition.png" alt="Condition">
+          <p class="vid-label">Condition</p>
+        </div>
+        <div>
+          <div class="vid-inner">
+            <!-- ✦ Replace with: assets/videos/toys4k_e1_ours.mp4 -->
+            <div class="placeholder video"><i class="fas fa-cube"></i><p>Ours</p><code>assets/videos/toys4k_e1_ours.mp4</code></div>
+            <button class="play-overlay" aria-label="Play Ours"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          </div>
+          <p class="vid-label ours">Ours</p>
+        </div>
+        <div>
+          <div class="vid-inner">
+            <!-- ✦ Replace with: assets/videos/toys4k_e1_std_ft.mp4 -->
+            <div class="placeholder video"><i class="fas fa-cube"></i><p>Standard FT</p><code>assets/videos/toys4k_e1_std_ft.mp4</code></div>
+            <button class="play-overlay" aria-label="Play Standard FT"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          </div>
+          <p class="vid-label">Standard FT</p>
+        </div>
+        <div>
+          <div class="vid-inner">
+            <!-- ✦ Replace with: assets/videos/toys4k_e1_it_guidance.mp4 -->
+            <div class="placeholder video"><i class="fas fa-cube"></i><p>IT Guidance</p><code>assets/videos/toys4k_e1_it_guidance.mp4</code></div>
+            <button class="play-overlay" aria-label="Play IT Guidance"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          </div>
+          <p class="vid-label">IT Guidance</p>
+        </div>
+      </div>
+
+    </div><!-- /subsection 2 -->
 
   </div>
 </section>
