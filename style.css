@@ -507,6 +507,7 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
   margin-bottom: 6px;
   text-align: center;
 }
+.cols-4 { grid-template-columns: repeat(4, 1fr); }
 .cols-5 { grid-template-columns: repeat(5, 1fr); }
 
 .col-labels span {
@@ -537,8 +538,11 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
 
 .comparison-row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 6px;
+}
+.comparison-row.c5 {
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .comparison-row img {

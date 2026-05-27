@@ -281,121 +281,126 @@
     <h2 class="section-heading">Results: Image Tasks</h2>
     <p class="section-lead">
       We fine-tune Stable Diffusion 3.5 Large with ControlNet / LoRA adapters on Unsplash-25K
-      and evaluate on four conditional generation tasks.
-      Baselines: Standard FT · FT + Alignment Loss · FlowChef (inference-time guidance).
+      across depth-to-image and edge-to-image translation. For full quantitative results
+      see the paper.
     </p>
 
     <div class="task-tabs" role="tablist">
       <button class="tab active" data-target="tab-depth" role="tab">Depth → RGB</button>
       <button class="tab" data-target="tab-edge" role="tab">Edge → RGB</button>
-      <button class="tab" data-target="tab-sr" role="tab">Super-Resolution</button>
-      <button class="tab" data-target="tab-jpeg" role="tab">JPEG Restoration</button>
     </div>
 
     <!-- Depth -->
     <div class="tab-panel active" id="tab-depth">
-      <div class="col-labels cols-5">
+      <div class="col-labels cols-4">
         <span>Input Depth</span>
-        <span>Standard FT</span>
-        <span>FT + Align.</span>
         <span class="ours-label">Ours (Zero-Order)</span>
-        <span class="ours-label">Ours (First-Order)</span>
+        <span>Standard FT</span>
+        <span>FT + ℒ<sub>align</sub></span>
       </div>
       <div class="comparison-grid">
         <div class="comparison-row">
           <img src="assets/images/img2img/t1_r1_condition.png" alt="Input depth, example 1">
+          <img src="assets/images/img2img/t1_r1_ours_zero.png" alt="Ours Zero-Order, example 1" class="ours-img">
           <img src="assets/images/img2img/t1_r1_std_ft.png"   alt="Standard FT, example 1">
           <img src="assets/images/img2img/t1_r1_ft_align.png" alt="FT + Align, example 1">
-          <img src="assets/images/img2img/t1_r1_ours_zero.png"  alt="Ours Zero-Order, example 1" class="ours-img">
-          <img src="assets/images/img2img/t1_r1_ours_first.png" alt="Ours First-Order, example 1" class="ours-img">
         </div>
         <div class="comparison-sep"></div>
         <div class="comparison-row">
           <img src="assets/images/img2img/t1_r2_condition.png" alt="Input depth, example 2">
+          <img src="assets/images/img2img/t1_r2_ours_zero.png" alt="Ours Zero-Order, example 2" class="ours-img">
           <img src="assets/images/img2img/t1_r2_std_ft.png"   alt="Standard FT, example 2">
           <img src="assets/images/img2img/t1_r2_ft_align.png" alt="FT + Align, example 2">
-          <img src="assets/images/img2img/t1_r2_ours_zero.png"  alt="Ours Zero-Order, example 2" class="ours-img">
-          <img src="assets/images/img2img/t1_r2_ours_first.png" alt="Ours First-Order, example 2" class="ours-img">
         </div>
       </div>
       <p class="fig-caption">
         <strong>Depth → RGB.</strong> FlowBender produces images whose re-extracted depth matches
         the input more faithfully while maintaining photorealism — a direct result of the
-        gradient-based feedback from the depth predictor. Green borders mark our method's outputs.
+        gradient-based feedback signal from the depth predictor.
       </p>
     </div>
 
     <!-- Edge -->
     <div class="tab-panel" id="tab-edge">
-      <div class="col-labels cols-5">
+      <div class="col-labels cols-4">
         <span>Input Edges</span>
-        <span>Standard FT</span>
-        <span>FT + Align.</span>
         <span class="ours-label">Ours (Zero-Order)</span>
-        <span class="ours-label">Ours (First-Order)</span>
+        <span>Standard FT</span>
+        <span>FT + ℒ<sub>align</sub></span>
       </div>
       <div class="comparison-grid">
         <div class="comparison-row">
           <img src="assets/images/img2img/t2_r1_condition.png" alt="Input edges, example 1">
+          <img src="assets/images/img2img/t2_r1_ours_zero.png" alt="Ours Zero-Order, example 1" class="ours-img">
           <img src="assets/images/img2img/t2_r1_std_ft.png"   alt="Standard FT, example 1">
           <img src="assets/images/img2img/t2_r1_ft_align.png" alt="FT + Align, example 1">
-          <img src="assets/images/img2img/t2_r1_ours_zero.png"  alt="Ours Zero-Order, example 1" class="ours-img">
-          <img src="assets/images/img2img/t2_r1_ours_first.png" alt="Ours First-Order, example 1" class="ours-img">
         </div>
         <div class="comparison-sep"></div>
         <div class="comparison-row">
           <img src="assets/images/img2img/t2_r2_condition.png" alt="Input edges, example 2">
+          <img src="assets/images/img2img/t2_r2_ours_zero.png" alt="Ours Zero-Order, example 2" class="ours-img">
           <img src="assets/images/img2img/t2_r2_std_ft.png"   alt="Standard FT, example 2">
           <img src="assets/images/img2img/t2_r2_ft_align.png" alt="FT + Align, example 2">
-          <img src="assets/images/img2img/t2_r2_ours_zero.png"  alt="Ours Zero-Order, example 2" class="ours-img">
-          <img src="assets/images/img2img/t2_r2_ours_first.png" alt="Ours First-Order, example 2" class="ours-img">
         </div>
       </div>
       <p class="fig-caption">
-        <strong>Edge → RGB.</strong> The same feedback-aware training generalizes to edge maps.
-        FlowBender's outputs faithfully reproduce the structural contours of the input edge image
-        while generating photorealistic textures and shading.
+        <strong>Edge → RGB.</strong> The feedback-aware training generalizes to edge maps.
+        FlowBender faithfully reproduces the structural contours of the input while generating
+        photorealistic textures.
       </p>
     </div>
 
-    <!-- Super-resolution -->
-    <div class="tab-panel" id="tab-sr">
-      <div class="col-labels cols-5">
-        <span>LR Input</span>
-        <span>Standard FT</span>
-        <span>FT + Align.</span>
-        <span>FlowChef</span>
-        <span class="ours-label">FlowBender (Ours)</span>
-      </div>
-      <!-- ✦ Replace with: assets/images/sr_qualitative.png -->
-      <div class="placeholder comparison">
-        <i class="fas fa-image"></i>
-        <p>Super-Resolution comparison grid</p>
-        <code>assets/images/sr_qualitative.png</code>
-      </div>
-    </div>
+  </div>
+</section>
 
-    <!-- JPEG -->
-    <div class="tab-panel" id="tab-jpeg">
-      <div class="col-labels cols-5">
-        <span>JPEG Input</span>
-        <span>Standard FT</span>
-        <span>FT + Align.</span>
-        <span>Zero-Order FB</span>
-        <span class="ours-label">FlowBender (Ours)</span>
-      </div>
-      <!-- ✦ Replace with: assets/images/jpeg_qualitative.png -->
-      <div class="placeholder comparison">
-        <i class="fas fa-image"></i>
-        <p>JPEG Restoration comparison grid</p>
-        <code>assets/images/jpeg_qualitative.png</code>
-      </div>
-      <p class="fig-caption">
-        <strong>Non-differentiable operator.</strong> JPEG compression has no usable gradient, so
-        standard guidance cannot be applied. The zero-order FlowBender variant uses the measurement
-        residual directly and remains fully effective.
-      </p>
+<!-- ================================================================
+     RESULTS: JPEG RESTORATION
+================================================================ -->
+<section id="jpeg-results" class="section">
+  <div class="container">
+    <h2 class="section-heading">JPEG Restoration — Non-Differentiable Operator</h2>
+    <p class="section-lead">
+      JPEG compression is a non-differentiable operator — its gradient is undefined, making
+      standard inference-time guidance inapplicable. FlowBender's zero-order variant sidesteps
+      this entirely: the feedback signal is the <em>measurement residual</em>
+      R(H(x̂<sub>1</sub>), y), requiring no gradient through the forward operator. The model is
+      trained to correct from this residual alone, and outperforms all differentiable baselines.
+    </p>
+
+    <div class="col-labels cols-4">
+      <span>JPEG Input</span>
+      <span class="ours-label">Ours (Zero-Order)</span>
+      <span>Standard FT</span>
+      <span>FT + ℒ<sub>align</sub></span>
     </div>
+    <div class="comparison-grid">
+      <div class="comparison-row">
+        <img src="assets/images/jpeg/r1_condition.png" alt="JPEG input, example 1">
+        <img src="assets/images/jpeg/r1_ours_zero.png" alt="Ours Zero-Order, example 1" class="ours-img">
+        <img src="assets/images/jpeg/r1_std_ft.png"   alt="Standard FT, example 1">
+        <img src="assets/images/jpeg/r1_ft_align.png" alt="FT + Align, example 1">
+      </div>
+      <div class="comparison-sep"></div>
+      <div class="comparison-row">
+        <img src="assets/images/jpeg/r2_condition.png" alt="JPEG input, example 2">
+        <img src="assets/images/jpeg/r2_ours_zero.png" alt="Ours Zero-Order, example 2" class="ours-img">
+        <img src="assets/images/jpeg/r2_std_ft.png"   alt="Standard FT, example 2">
+        <img src="assets/images/jpeg/r2_ft_align.png" alt="FT + Align, example 2">
+      </div>
+      <div class="comparison-sep"></div>
+      <div class="comparison-row">
+        <img src="assets/images/jpeg/r3_condition.png" alt="JPEG input, example 3">
+        <img src="assets/images/jpeg/r3_ours_zero.png" alt="Ours Zero-Order, example 3" class="ours-img">
+        <img src="assets/images/jpeg/r3_std_ft.png"   alt="Standard FT, example 3">
+        <img src="assets/images/jpeg/r3_ft_align.png" alt="FT + Align, example 3">
+      </div>
+    </div>
+    <p class="fig-caption">
+      <strong>JPEG Restoration.</strong> No guidance method can be applied here — the forward
+      operator has no well-defined gradient. FlowBender (Zero-Order) uses the pixel-space residual
+      R(H(x̂<sub>1</sub>), y) as feedback and recovers clean, artifact-free images that standard
+      fine-tuning and alignment-loss augmentation cannot match.
+    </p>
 
   </div>
 </section>
