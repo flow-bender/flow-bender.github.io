@@ -35,7 +35,7 @@ document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObs.observe(e
       // snap back to fixed height
       wrap.style.maxHeight = wrap.scrollHeight + 'px'; // set explicit so transition works from 'none'
       requestAnimationFrame(() => requestAnimationFrame(() => {
-        wrap.style.maxHeight = '5.4rem';
+        wrap.style.maxHeight = '14rem';
       }));
       fade.style.opacity = '1';
       toggle.innerHTML = 'Read more <i class="fas fa-chevron-down"></i>';

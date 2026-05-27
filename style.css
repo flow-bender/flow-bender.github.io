@@ -226,7 +226,7 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
 /* Abstract — collapsed with fade + expand */
 .abstract-wrap {
   position: relative;
-  max-height: 5.4rem;
+  max-height: 14rem;
   overflow: hidden;
   transition: max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -294,9 +294,23 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
 
 .method-card {
   padding: 1.4rem 1.5rem;
-  border-top: 2px solid var(--accent);
-  background: var(--bg-alt);
+  border-top: 2px solid var(--mc-color, var(--accent));
+  background: var(--mc-bg, var(--bg-alt));
   border-radius: 0 0 var(--radius) var(--radius);
+}
+
+/* Match colors from the method figure */
+.method-card:nth-child(1) {
+  --mc-color: #f59e0b;   /* amber — matches v_θ / L_FA boxes */
+  --mc-bg:    #fffbeb;
+}
+.method-card:nth-child(2) {
+  --mc-color: #60a5fa;   /* light blue — matches H / R boxes */
+  --mc-bg:    #eff6ff;
+}
+.method-card:nth-child(3) {
+  --mc-color: #3b82f6;   /* medium blue — matches V_θ / ODE Step boxes */
+  --mc-bg:    #eff6ff;
 }
 
 .method-card h3 {
