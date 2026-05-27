@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlowBender — Feedback-Aware Training for Self-Correcting Conditional Flows</title>
+  <meta name="description" content="FlowBender trains conditional diffusion and flow models to integrate alignment feedback during sampling, improving both fidelity and plausibility simultaneously.">
+  <meta property="og:title" content="FlowBender: Feedback-Aware Training for Self-Correcting Conditional Flows">
+  <meta property="og:description" content="A closed-loop framework that trains conditional flow models to learn a correction policy conditioned on inference-time feedback.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================================================================
+     HERO
+================================================================ -->
+<header class="hero">
+  <div class="container">
+
+    <div class="venue-badge">NeurIPS 2026</div>
+
+    <h1 class="paper-title">
+      <span class="title-accent">FlowBender</span>: Feedback-Aware Training<br>
+      for Self-Correcting Conditional Flows
+    </h1>
+
+    <div class="authors">
+      <a href="mailto:danielgilo@cs.technion.ac.il" class="author">Daniel Gilo<sup>1</sup></a>
+      <span class="author">Sven Elflein<sup>2,3,4</sup></span>
+      <span class="author">Ido Sobol<sup>1</sup></span>
+      <span class="author">Or Litany<sup>1,2</sup></span>
+    </div>
+
+    <div class="affiliations">
+      <span><sup>1</sup>Technion</span>
+      <span><sup>2</sup>NVIDIA</span>
+      <span><sup>3</sup>University of Toronto</span>
+      <span><sup>4</sup>Vector Institute</span>
+    </div>
+
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary disabled" title="Paper coming soon">
+        <i class="fas fa-file-pdf"></i> Paper
+      </a>
+      <a href="#" class="btn btn-outline disabled" title="Code coming soon">
+        <i class="fab fa-github"></i> Code
+      </a>
+      <a href="#bibtex" class="btn btn-outline js-scroll-bibtex">
+        <i class="fas fa-quote-right"></i> BibTeX
+      </a>
+    </div>
+
+  </div>
+</header>
+
+<!-- ================================================================
+     TEASER
+================================================================ -->
+<section class="teaser">
+  <div class="container">
+
+    <!-- ✦ Replace with: assets/images/teaser.png (method-figure.pdf → PNG, or an animated GIF) -->
+    <figure class="teaser-figure">
+      <div class="placeholder tall">
+        <i class="fas fa-image"></i>
+        <p>Teaser / method overview figure</p>
+        <code>assets/images/teaser.png</code>
+      </div>
+    </figure>
+
+    <p class="tldr">
+      <strong>TL;DR</strong>&ensp;We train conditional diffusion/flow models to <em>read their own
+      alignment error</em> at inference time — a closed-loop correction policy that improves
+      both condition fidelity and sample plausibility simultaneously, without the fidelity–
+      plausibility trade-off of hand-tuned guidance.
+    </p>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     ABSTRACT
+================================================================ -->
+<section id="abstract" class="section alt">
+  <div class="container narrow">
+    <h2 class="section-heading">Abstract</h2>
+    <div class="abstract-body">
+      <p>
+        Conditional diffusion and flow models routinely fail to satisfy the very constraints that
+        define their task. For instance, a depth-conditioned model often produces images whose
+        re-extracted depth disagrees with the input, even though the forward operator — the depth
+        predictor defining the constraint — is available during both training and inference. Existing
+        approaches generally fall into two categories: supervised models that treat the conditioning
+        signal as a static cue and ignore alignment information at inference, and guidance-based
+        methods that consult it through hand-tuned linear updates, typically trading fidelity to the
+        condition against the plausibility of the generated sample.
+      </p>
+      <p>
+        We argue that the fundamental gap in both paradigms is that the model is never trained to
+        utilize its own alignment error. We introduce <strong>FlowBender</strong>, a closed-loop
+        framework that treats this error as a first-class input, training the network to learn a
+        correction policy conditioned on inference-time feedback. At each step, an unguided
+        look-ahead pass estimates the clean signal, a task-specific deviation is computed via the
+        forward operator, and a refinement pass consumes this signal to produce a corrected velocity.
+      </p>
+      <p>
+        We propose several variants, including a gradient-based formulation for differentiable
+        operators and a zero-order variant for non-differentiable settings such as JPEG compression.
+        For efficient sampling, we introduce a prior-step shortcut that enables closed-loop
+        correction at minimal additional computational cost. Across image-to-image translation,
+        restoration, and 3D mesh texturing, FlowBender consistently outperforms standard supervised
+        baselines, alignment-loss-augmented training, and state-of-the-art inference-time guidance,
+        improving fidelity and plausibility simultaneously rather than trading them against each other.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     METHOD
+================================================================ -->
+<section id="method" class="section">
+  <div class="container">
+    <h2 class="section-heading">Method</h2>
+    <p class="section-lead">
+      A two-pass training strategy that teaches the model to read and respond to its own
+      alignment error at every denoising step.
+    </p>
+
+    <!-- ✦ Replace with: assets/images/method-figure.png (method-figure.pdf → PNG) -->
+    <figure class="full-figure">
+      <div class="placeholder wide">
+        <i class="fas fa-project-diagram"></i>
+        <p>Method diagram</p>
+        <code>assets/images/method-figure.png</code>
+      </div>
+    </figure>
+
+    <div class="method-steps">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Look-Ahead Pass</h3>
+        <p>
+          At each denoising step the model runs once <em>without</em> feedback
+          (s<sub>t</sub>&thinsp;=&thinsp;0) to estimate the clean output
+          <strong>x̂<sub>1</sub></strong>. This is a standard forward pass — no extra parameters.
+        </p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Feedback Computation</h3>
+        <p>
+          The estimated clean signal is passed through the forward operator <strong>H</strong>
+          (depth predictor, edge detector, JPEG codec, …) to produce a feedback signal
+          <strong>s<sub>t</sub></strong> — either a gradient ∇L for differentiable operators
+          or a measurement residual for non-differentiable ones.
+        </p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Refinement Pass</h3>
+        <p>
+          <strong>s<sub>t</sub></strong> is concatenated to the model input
+          (stop-gradient applied) and the model runs a second time, producing a corrected
+          velocity that incorporates the alignment error. Random nullification of
+          s<sub>t</sub> during training preserves the unguided regime.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <i class="fas fa-bolt callout-icon"></i>
+      <div>
+        <strong>Prior-Step Shortcut.</strong>&ensp;Feedback signals are highly correlated across
+        adjacent timesteps. Below a threshold <em>t</em><sub>thresh</sub> we reuse the prior
+        step's look-ahead estimate, reducing inference cost from <em>2N</em> to
+        <em>N + 1</em> evaluations with minimal quality loss.
+      </div>
+    </div>
+
+    <!-- 2D toy -->
+    <div class="subsection">
+      <h3 class="sub-heading">2D Toy Illustration</h3>
+      <p class="sub-lead">
+        On a 2D Gaussian toy problem we visualize how the feedback signal steers denoising
+        trajectories onto the constraint manifold while preserving sample diversity.
+      </p>
+      <!-- ✦ Replace with: assets/images/2d_toy.png (2d_toy_samples_and_traj.pdf → PNG) -->
+      <div class="placeholder wide">
+        <i class="fas fa-chart-scatter"></i>
+        <p>2D toy — samples and trajectories</p>
+        <code>assets/images/2d_toy.png</code>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     RESULTS: IMAGE TASKS
+================================================================ -->
+<section id="image-results" class="section alt">
+  <div class="container">
+    <h2 class="section-heading">Results: Image Tasks</h2>
+    <p class="section-lead">
+      We fine-tune Stable Diffusion 3.5 Large with ControlNet / LoRA adapters on Unsplash-25K
+      and evaluate on four conditional generation tasks.
+      Baselines: Standard FT · FT + Alignment Loss · FlowChef (inference-time guidance).
+    </p>
+
+    <div class="task-tabs" role="tablist">
+      <button class="tab active" data-target="tab-depth" role="tab">Depth → RGB</button>
+      <button class="tab" data-target="tab-edge" role="tab">Edge → RGB</button>
+      <button class="tab" data-target="tab-sr" role="tab">Super-Resolution</button>
+      <button class="tab" data-target="tab-jpeg" role="tab">JPEG Restoration</button>
+    </div>
+
+    <!-- Depth -->
+    <div class="tab-panel active" id="tab-depth">
+      <div class="col-labels cols-5">
+        <span>Input Depth</span>
+        <span>Standard FT</span>
+        <span>FT + Align.</span>
+        <span>FlowChef</span>
+        <span class="ours-label">FlowBender (Ours)</span>
+      </div>
+      <!-- ✦ Replace with: assets/images/depth_qualitative.png -->
+      <div class="placeholder comparison">
+        <i class="fas fa-image"></i>
+        <p>Depth → RGB comparison grid</p>
+        <code>assets/images/depth_qualitative.png</code>
+      </div>
+      <p class="fig-caption">
+        <strong>Depth → RGB.</strong> FlowBender produces images whose re-extracted depth matches
+        the input more faithfully while maintaining photorealism — a direct result of the
+        gradient-based feedback from the depth predictor.
+      </p>
+    </div>
+
+    <!-- Edge -->
+    <div class="tab-panel" id="tab-edge">
+      <div class="col-labels cols-5">
+        <span>Input Edges</span>
+        <span>Standard FT</span>
+        <span>FT + Align.</span>
+        <span>FlowChef</span>
+        <span class="ours-label">FlowBender (Ours)</span>
+      </div>
+      <!-- ✦ Replace with: assets/images/edge_qualitative.png -->
+      <div class="placeholder comparison">
+        <i class="fas fa-image"></i>
+        <p>Edge → RGB comparison grid</p>
+        <code>assets/images/edge_qualitative.png</code>
+      </div>
+    </div>
+
+    <!-- Super-resolution -->
+    <div class="tab-panel" id="tab-sr">
+      <div class="col-labels cols-5">
+        <span>LR Input</span>
+        <span>Standard FT</span>
+        <span>FT + Align.</span>
+        <span>FlowChef</span>
+        <span class="ours-label">FlowBender (Ours)</span>
+      </div>
+      <!-- ✦ Replace with: assets/images/sr_qualitative.png -->
+      <div class="placeholder comparison">
+        <i class="fas fa-image"></i>
+        <p>Super-Resolution comparison grid</p>
+        <code>assets/images/sr_qualitative.png</code>
+      </div>
+    </div>
+
+    <!-- JPEG -->
+    <div class="tab-panel" id="tab-jpeg">
+      <div class="col-labels cols-5">
+        <span>JPEG Input</span>
+        <span>Standard FT</span>
+        <span>FT + Align.</span>
+        <span>Zero-Order FB</span>
+        <span class="ours-label">FlowBender (Ours)</span>
+      </div>
+      <!-- ✦ Replace with: assets/images/jpeg_qualitative.png -->
+      <div class="placeholder comparison">
+        <i class="fas fa-image"></i>
+        <p>JPEG Restoration comparison grid</p>
+        <code>assets/images/jpeg_qualitative.png</code>
+      </div>
+      <p class="fig-caption">
+        <strong>Non-differentiable operator.</strong> JPEG compression has no usable gradient, so
+        standard guidance cannot be applied. The zero-order FlowBender variant uses the measurement
+        residual directly and remains fully effective.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     RESULTS: 3D TEXTURING
+================================================================ -->
+<section id="texturing-results" class="section">
+  <div class="container">
+    <h2 class="section-heading">Results: 3D Mesh Texturing</h2>
+    <p class="section-lead">
+      We fine-tune TRELLIS-2 with FlowBender's feedback-aware training on 3D PBR texture
+      generation, evaluated on ObjaverseXL and Toys4K.
+    </p>
+
+    <div class="subsection">
+      <h3 class="sub-heading">ObjaverseXL</h3>
+      <!-- ✦ Replace with: assets/images/qual_objaverse.png -->
+      <div class="placeholder comparison">
+        <i class="fas fa-cube"></i>
+        <p>ObjaverseXL qualitative comparison</p>
+        <code>assets/images/qual_objaverse.png</code>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3 class="sub-heading">Toys4K</h3>
+      <!-- ✦ Replace with: assets/images/qual_toys4k.png -->
+      <div class="placeholder comparison">
+        <i class="fas fa-cube"></i>
+        <p>Toys4K qualitative comparison</p>
+        <code>assets/images/qual_toys4k.png</code>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3 class="sub-heading">Multi-View Turntable Comparison</h3>
+      <p class="sub-lead">
+        Looping renders comparing Standard FT against FlowBender across 360° viewpoints,
+        demonstrating consistent texture coherence under the closed-loop correction.
+      </p>
+      <div class="video-grid">
+        <div class="video-col">
+          <p class="vid-label">Standard FT</p>
+          <!-- ✦ Replace with: assets/videos/baseline_turntable.mp4 -->
+          <div class="placeholder video">
+            <i class="fas fa-video"></i>
+            <p>Baseline turntable</p>
+            <code>assets/videos/baseline_turntable.mp4</code>
+          </div>
+          <!--
+          <video autoplay loop muted playsinline>
+            <source src="assets/videos/baseline_turntable.mp4" type="video/mp4">
+          </video>
+          -->
+        </div>
+        <div class="video-col">
+          <p class="vid-label ours">FlowBender (Ours)</p>
+          <!-- ✦ Replace with: assets/videos/ours_turntable.mp4 -->
+          <div class="placeholder video">
+            <i class="fas fa-video"></i>
+            <p>FlowBender turntable</p>
+            <code>assets/videos/ours_turntable.mp4</code>
+          </div>
+          <!--
+          <video autoplay loop muted playsinline>
+            <source src="assets/videos/ours_turntable.mp4" type="video/mp4">
+          </video>
+          -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     BIBTEX
+================================================================ -->
+<section id="bibtex" class="section dark">
+  <div class="container narrow">
+    <h2 class="section-heading light">BibTeX</h2>
+    <div class="bibtex-wrap">
+      <button class="copy-btn" id="copy-btn">
+        <i class="fas fa-copy"></i> Copy
+      </button>
+      <pre class="bibtex" id="bibtex-text">@article{gilo2026flowbender,
+  title   = {{FlowBender}: Feedback-Aware Training for
+             Self-Correcting Conditional Flows},
+  author  = {Gilo, Daniel and Elflein, Sven and
+             Sobol, Ido and Litany, Or},
+  journal = {Advances in Neural Information Processing Systems},
+  year    = {2026}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+<footer class="footer">
+  <div class="container">
+    <p>Daniel Gilo, Sven Elflein, Ido Sobol, Or Litany · Technion &amp; NVIDIA · 2026</p>
+    <p class="footer-credits">
+      Design inspired by
+      <a href="https://idosobol.github.io/realiz3d/" target="_blank" rel="noopener">Realiz3D</a>
+      and
+      <a href="https://time-to-move.github.io/" target="_blank" rel="noopener">Time to Move</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
