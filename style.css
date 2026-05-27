@@ -309,8 +309,8 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
   --mc-bg:    #eff6ff;
 }
 .method-card:nth-child(3) {
-  --mc-color: #3b82f6;   /* medium blue — matches V_θ / ODE Step boxes */
-  --mc-bg:    #eff6ff;
+  --mc-color: #34d399;   /* mint/emerald — matches x̂₁ Cache box */
+  --mc-bg:    #ecfdf5;
 }
 
 .method-card h3 {
