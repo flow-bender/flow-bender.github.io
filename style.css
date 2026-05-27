@@ -201,18 +201,35 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
   line-height: 1.65;
 }
 
-/* Abstract */
-.abstract-body p {
-  font-size: 0.975rem;
-  color: #374151;
-  margin-bottom: 1.1rem;
+/* Abstract — two-column layout */
+.abstract-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
 }
-.abstract-body p:last-child { margin-bottom: 0; }
+
+.abstract-cols p {
+  font-size: 0.95rem;
+  color: #374151;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.abstract-cols p:last-child { margin-bottom: 0; }
+
+@media (max-width: 640px) {
+  .abstract-cols { grid-template-columns: 1fr; gap: 0; }
+}
 
 /* ================================================================
    METHOD
 ================================================================ */
 .full-figure { margin-bottom: 3rem; }
+.full-figure img {
+  width: 100%;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
 
 .method-steps {
   display: grid;
