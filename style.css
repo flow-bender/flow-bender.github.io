@@ -628,8 +628,8 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
   background: var(--bg-alt);
 }
 
-.vid-inner .placeholder.video { border-radius: 0; height: 200px; }
-.vid-inner video              { display: block; width: 100%; border-radius: 0; }
+.vid-inner .placeholder.video { border-radius: 0; height: auto; aspect-ratio: 1 / 1; }
+.vid-inner video              { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 0; }
 
 /* Single play button centered over all 3 videos */
 .play-all-btn {
