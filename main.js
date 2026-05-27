@@ -12,6 +12,37 @@ const revealObs = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObs.observe(el));
 
+// ── Abstract expand/collapse ─────────────────────────────────────
+(function () {
+  const wrap   = document.getElementById('abstract-wrap');
+  const fade   = document.getElementById('abstract-fade');
+  const toggle = document.getElementById('abstract-toggle');
+  if (!wrap || !toggle) return;
+
+  let expanded = false;
+
+  toggle.addEventListener('click', () => {
+    expanded = !expanded;
+    if (expanded) {
+      wrap.style.maxHeight = wrap.scrollHeight + 'px';
+      fade.style.opacity = '0';
+      toggle.innerHTML = 'Show less <i class="fas fa-chevron-up"></i>';
+      // once transition ends, free the height so reflow works
+      wrap.addEventListener('transitionend', () => {
+        if (expanded) wrap.style.maxHeight = 'none';
+      }, { once: true });
+    } else {
+      // snap back to fixed height
+      wrap.style.maxHeight = wrap.scrollHeight + 'px'; // set explicit so transition works from 'none'
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        wrap.style.maxHeight = '5.4rem';
+      }));
+      fade.style.opacity = '1';
+      toggle.innerHTML = 'Read more <i class="fas fa-chevron-down"></i>';
+    }
+  });
+})();
+
 // ── Tab switching ────────────────────────────────────────────────
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {

@@ -72,12 +72,13 @@
       </div>
     </figure>
 
-    <p class="tldr">
-      <strong>TL;DR</strong>&ensp;We train conditional diffusion/flow models to <em>read their own
+    <div class="tldr-card">
+      <span class="tldr-tag">TL;DR</span>
+      <p class="tldr">We train conditional diffusion/flow models to <em>read their own
       alignment error</em> at inference time — a closed-loop correction policy that improves
-      both condition fidelity and sample plausibility simultaneously, without the fidelity–
-      plausibility trade-off of hand-tuned guidance.
-    </p>
+      both condition fidelity and sample plausibility simultaneously, without the fidelity–plausibility
+      trade-off of hand-tuned guidance.</p>
+    </div>
 
   </div>
 </section>
@@ -86,20 +87,20 @@
      ABSTRACT
 ================================================================ -->
 <section id="abstract" class="section alt">
-  <div class="container">
+  <div class="container narrow">
     <h2 class="section-heading">Abstract</h2>
-    <div class="abstract-cols">
-      <p>
-        Conditional diffusion and flow models routinely fail to satisfy the very constraints that
-        define their task. For instance, a depth-conditioned model often produces images whose
-        re-extracted depth disagrees with the input, even though the forward operator — the depth
-        predictor defining the constraint — is available during both training and inference. Existing
-        approaches generally fall into two categories: supervised models that treat the conditioning
-        signal as a static cue and ignore alignment information at inference, and guidance-based
-        methods that consult it through hand-tuned linear updates, typically trading fidelity to the
-        condition against the plausibility of the generated sample.
-      </p>
-      <div>
+    <div class="abstract-wrap" id="abstract-wrap">
+      <div class="abstract-body">
+        <p>
+          Conditional diffusion and flow models routinely fail to satisfy the very constraints that
+          define their task. For instance, a depth-conditioned model often produces images whose
+          re-extracted depth disagrees with the input, even though the forward operator — the depth
+          predictor defining the constraint — is available during both training and inference. Existing
+          approaches generally fall into two categories: supervised models that treat the conditioning
+          signal as a static cue and ignore alignment information at inference, and guidance-based
+          methods that consult it through hand-tuned linear updates, typically trading fidelity to the
+          condition against the plausibility of the generated sample.
+        </p>
         <p>
           We argue that the fundamental gap in both paradigms is that the model is never trained to
           utilize its own alignment error. We introduce <strong>FlowBender</strong>, a closed-loop
@@ -118,7 +119,11 @@
           improving fidelity and plausibility simultaneously rather than trading them against each other.
         </p>
       </div>
+      <div class="abstract-fade" id="abstract-fade"></div>
     </div>
+    <button class="abstract-toggle" id="abstract-toggle">
+      Read more <i class="fas fa-chevron-down"></i>
+    </button>
   </div>
 </section>
 
@@ -232,45 +237,35 @@
       <img src="assets/images/method-figure.png" alt="FlowBender method diagram: two-pass feedback-aware training loop">
     </figure>
 
-    <div class="method-steps">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <h3>Look-Ahead Pass</h3>
+    <div class="method-cards">
+      <div class="method-card">
+        <h3>Feedback-Aware Training</h3>
         <p>
-          At each denoising step the model runs once <em>without</em> feedback
-          (s<sub>t</sub>&thinsp;=&thinsp;0) to estimate the clean output
-          <strong>x̂<sub>1</sub></strong>. This is a standard forward pass — no extra parameters.
+          Two forward passes per denoising step. An unguided look-ahead estimates
+          <strong>x̂<sub>1</sub></strong>; the resulting alignment error
+          <strong>s<sub>t</sub></strong> is fed back to a refinement pass that produces
+          the corrected velocity. A stop-gradient on <strong>s<sub>t</sub></strong> and
+          random nullification during training keep the unguided regime intact.
         </p>
       </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <h3>Feedback Computation</h3>
+      <div class="method-card">
+        <h3>Feedback Variants</h3>
         <p>
-          The estimated clean signal is passed through the forward operator <strong>H</strong>
-          (depth predictor, edge detector, JPEG codec, …) to produce a feedback signal
-          <strong>s<sub>t</sub></strong> — either a gradient ∇L for differentiable operators
-          or a measurement residual for non-differentiable ones.
+          For differentiable operators, <strong>s<sub>t</sub></strong> is the gradient
+          of the alignment loss — a first-order correction signal. For non-differentiable
+          operators (e.g., JPEG compression), a zero-order variant uses the measurement
+          residual <strong>R(H(x̂<sub>1</sub>), y)</strong> directly. A hybrid option
+          concatenates both.
         </p>
       </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <h3>Refinement Pass</h3>
+      <div class="method-card">
+        <h3>Inference Prior-Step Shortcut</h3>
         <p>
-          <strong>s<sub>t</sub></strong> is concatenated to the model input
-          (stop-gradient applied) and the model runs a second time, producing a corrected
-          velocity that incorporates the alignment error. Random nullification of
-          s<sub>t</sub> during training preserves the unguided regime.
+          Feedback signals are strongly correlated across adjacent timesteps. Below a
+          threshold <em>t</em><sub>thresh</sub>, the prior step's look-ahead estimate is
+          reused rather than recomputed — reducing inference cost from <em>2N</em> to
+          <em>N&thinsp;+&thinsp;1</em> evaluations with minimal impact on quality.
         </p>
-      </div>
-    </div>
-
-    <div class="callout">
-      <i class="fas fa-bolt callout-icon"></i>
-      <div>
-        <strong>Prior-Step Shortcut.</strong>&ensp;Feedback signals are highly correlated across
-        adjacent timesteps. Below a threshold <em>t</em><sub>thresh</sub> we reuse the prior
-        step's look-ahead estimate, reducing inference cost from <em>2N</em> to
-        <em>N + 1</em> evaluations with minimal quality loss.
       </div>
     </div>
 

@@ -167,15 +167,37 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
 
 .teaser-figure { margin-bottom: 1.75rem; }
 
-.tldr {
+.tldr-card {
   max-width: 680px;
   margin: 0 auto;
-  text-align: center;
-  font-size: 0.975rem;
-  color: var(--text-muted);
+  padding: 1.25rem 1.75rem;
+  background: var(--bg-alt);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
 }
-.tldr strong { color: var(--text); }
-.tldr em { font-style: italic; color: var(--accent); }
+
+.tldr-tag {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-tint);
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+}
+
+.tldr {
+  font-size: 0.975rem;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0;
+}
+.tldr em { color: var(--accent); font-style: normal; font-weight: 600; }
 
 /* ================================================================
    SECTIONS
@@ -201,96 +223,98 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
   line-height: 1.65;
 }
 
-/* Abstract — two-column layout */
-.abstract-cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
-  align-items: start;
+/* Abstract — collapsed with fade + expand */
+.abstract-wrap {
+  position: relative;
+  max-height: 5.4rem;
+  overflow: hidden;
+  transition: max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.abstract-cols p {
-  font-size: 0.95rem;
+.abstract-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3.5rem;
+  background: linear-gradient(to bottom, transparent, var(--bg-alt));
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.abstract-body p {
+  font-size: 0.975rem;
   color: #374151;
-  line-height: 1.7;
-  margin-bottom: 1rem;
+  line-height: 1.75;
+  margin-bottom: 1.1rem;
 }
-.abstract-cols p:last-child { margin-bottom: 0; }
+.abstract-body p:last-child { margin-bottom: 0; }
 
-@media (max-width: 640px) {
-  .abstract-cols { grid-template-columns: 1fr; gap: 0; }
+/* Toggle button: ── Read more ── */
+.abstract-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.85rem 0 0;
+  font-family: var(--font);
+  transition: color 0.15s;
 }
+.abstract-toggle::before,
+.abstract-toggle::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  transition: background 0.15s;
+}
+.abstract-toggle:hover { color: var(--accent); }
+.abstract-toggle:hover::before,
+.abstract-toggle:hover::after { background: var(--accent-tint); }
 
 /* ================================================================
    METHOD
 ================================================================ */
-.full-figure { margin-bottom: 3rem; }
-.full-figure img {
-  width: 100%;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-}
+.full-figure { margin-bottom: 2.5rem; }
+.full-figure img { width: 100%; }
 
-.method-steps {
+.method-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
-  margin-bottom: 1.75rem;
 }
 
-.step-card {
+.method-card {
+  padding: 1.4rem 1.5rem;
+  border-top: 2px solid var(--accent);
   background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.4rem;
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 
-.step-num {
-  width: 30px;
-  height: 30px;
-  background: var(--accent);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  font-weight: 700;
-  margin-bottom: 0.8rem;
-  flex-shrink: 0;
-}
-
-.step-card h3 {
-  font-size: 0.925rem;
-  font-weight: 700;
-  margin-bottom: 0.45rem;
-  color: var(--text);
-}
-
-.step-card p {
-  font-size: 0.875rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-
-/* Efficiency callout */
-.callout {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1.1rem 1.4rem;
-  background: #fffbeb;
-  border: 1px solid #fde68a;
-  border-radius: var(--radius);
+.method-card h3 {
   font-size: 0.9rem;
-  color: #78350f;
-  margin-bottom: 3rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  color: var(--text);
+  letter-spacing: -0.01em;
 }
 
-.callout-icon {
-  color: #d97706;
-  flex-shrink: 0;
-  margin-top: 0.15em;
+.method-card p {
+  font-size: 0.855rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+@media (max-width: 700px) {
+  .method-cards { grid-template-columns: 1fr; }
 }
 
 /* Subsections */
