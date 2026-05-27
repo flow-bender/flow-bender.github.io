@@ -295,6 +295,176 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
 }
 
 /* ================================================================
+   MOTIVATION STEPPER
+================================================================ */
+.stepper { margin-top: 0; }
+
+/* Progress pills row */
+.stepper-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 2.25rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.step-connector {
+  flex: 1;
+  max-width: 64px;
+  height: 2px;
+  background: var(--border);
+  transition: background 0.3s;
+}
+
+.step-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 100px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.pill-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.step-pill:hover { border-color: var(--accent); color: var(--accent); }
+.step-pill:hover .pill-num { background: var(--accent-tint); color: var(--accent); }
+
+.step-pill.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-tint);
+}
+.step-pill.active .pill-num {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* FlowBender step gets green accent */
+.step-pill.highlight { border-color: var(--border); }
+.step-pill.highlight:hover { border-color: var(--ours); color: var(--ours); }
+.step-pill.highlight:hover .pill-num { background: #d1fae5; color: var(--ours); }
+.step-pill.highlight.active {
+  border-color: var(--ours);
+  color: var(--ours);
+  background: #d1fae5;
+}
+.step-pill.highlight.active .pill-num {
+  background: var(--ours);
+  color: #fff;
+}
+
+/* Connector fills when step to its left is active */
+.step-connector.filled { background: var(--accent); }
+
+/* Panels */
+.stepper-body { position: relative; }
+
+.step-panel { display: none; }
+.step-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+
+.step-figure { margin: 0; }
+.step-figure img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); background: #fff; }
+
+/* Narrow fig = single panel (square-ish) */
+.narrow-fig { max-width: 380px; margin-left: auto; margin-right: auto; }
+
+/* Wide fig = 3-panel guidance scales strip — spans full width */
+.step-panel:has(.wide-fig) {
+  grid-template-columns: 1fr;
+}
+.step-panel:has(.wide-fig) .step-text { max-width: 640px; margin: 0 auto; text-align: center; }
+.wide-fig { max-width: 720px; margin: 0 auto 1.5rem; }
+
+.step-text h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  color: var(--text);
+}
+.step-text p {
+  font-size: 0.925rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* Nav row */
+.stepper-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.step-counter {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all 0.15s;
+}
+.step-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-tint);
+}
+.step-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* Last step: Next button turns green */
+.step-btn.next-btn.last {
+  border-color: var(--ours);
+  color: var(--ours);
+  background: #d1fae5;
+}
+
+/* Responsive */
+@media (max-width: 680px) {
+  .step-panel.active { grid-template-columns: 1fr; gap: 1.5rem; }
+  .pill-label { display: none; }
+  .step-pill { padding: 0.4rem; }
+}
+
+/* ================================================================
    TASK TABS
 ================================================================ */
 .task-tabs {
