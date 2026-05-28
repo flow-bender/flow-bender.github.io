@@ -13,7 +13,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <link rel="icon" href="assets/avatar_aang.png" type="image/png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -434,178 +436,145 @@
     <h2 class="section-heading">Results: 3D Mesh Texturing</h2>
     <p class="section-lead">
       We fine-tune TRELLIS-2 with FlowBender's feedback-aware training on 3D PBR texture
-      generation, evaluated on ObjaverseXL and Toys4K. <em>Ours</em> refers to the
-      x̂<sub>1</sub> feedback variant.
+      generation, evaluated on ObjaverseXL (rows 1–4) and Toys4K (rows 5–8).
+      <em>Ours</em> refers to the x̂<sub>1</sub> feedback variant.
+      The first example per dataset also includes 360° turntable videos — press
+      <i class="fas fa-play" style="font-size:0.75em"></i> to play them together.
     </p>
 
-    <!-- ── Subsection 1: Condition vs. re-render ─────────────────── -->
-    <div class="subsection">
-      <h3 class="sub-heading">Condition vs. Re-render</h3>
-      <p class="sub-lead">
-        Each row shows the input condition image alongside a re-rendered view of the generated
-        texture. Rows 1–4: ObjaverseXL. Rows 5–8: Toys4K.
-      </p>
+    <div class="col-labels cols-5">
+      <span>Condition</span>
+      <span class="ours-label">Ours</span>
+      <span>Standard FT</span>
+      <span>FT + ℒ<sub>align</sub></span>
+      <span>IT Guidance</span>
+    </div>
 
-      <div class="col-labels cols-5">
-        <span>Condition</span>
-        <span class="ours-label">Ours</span>
-        <span>Standard FT</span>
-        <span>FT + ℒ<sub>align</sub></span>
-        <span>IT Guidance</span>
-      </div>
-      <div class="comparison-grid">
-        <div class="comparison-row c5">
-          <img src="assets/images/3d/objaverse/e1_condition.png"   alt="Condition 1">
-          <img src="assets/images/3d/objaverse/e1_ours.png"        alt="Ours 1" class="ours-img">
-          <img src="assets/images/3d/objaverse/e1_std_ft.png"      alt="Standard FT 1">
-          <img src="assets/images/3d/objaverse/e1_ft_align.png"    alt="FT+align 1">
-          <img src="assets/images/3d/objaverse/e1_it_guidance.png" alt="IT Guidance 1">
-        </div>
-        <div class="comparison-sep"></div>
-        <div class="comparison-row c5">
-          <img src="assets/images/3d/objaverse/e2_condition.png"   alt="Condition 2">
-          <img src="assets/images/3d/objaverse/e2_ours.png"        alt="Ours 2" class="ours-img">
-          <img src="assets/images/3d/objaverse/e2_std_ft.png"      alt="Standard FT 2">
-          <img src="assets/images/3d/objaverse/e2_ft_align.png"    alt="FT+align 2">
-          <img src="assets/images/3d/objaverse/e2_it_guidance.png" alt="IT Guidance 2">
-        </div>
-        <div class="comparison-sep"></div>
-        <div class="comparison-row c5">
-          <img src="assets/images/3d/objaverse/e3_condition.png"   alt="Condition 3">
-          <img src="assets/images/3d/objaverse/e3_ours.png"        alt="Ours 3" class="ours-img">
-          <img src="assets/images/3d/objaverse/e3_std_ft.png"      alt="Standard FT 3">
-          <img src="assets/images/3d/objaverse/e3_ft_align.png"    alt="FT+align 3">
-          <img src="assets/images/3d/objaverse/e3_it_guidance.png" alt="IT Guidance 3">
-        </div>
-        <div class="comparison-sep"></div>
-        <div class="comparison-row c5">
-          <img src="assets/images/3d/objaverse/e4_condition.png"   alt="Condition 4">
-          <img src="assets/images/3d/objaverse/e4_ours.png"        alt="Ours 4" class="ours-img">
-          <img src="assets/images/3d/objaverse/e4_std_ft.png"      alt="Standard FT 4">
-          <img src="assets/images/3d/objaverse/e4_ft_align.png"    alt="FT+align 4">
-          <img src="assets/images/3d/objaverse/e4_it_guidance.png" alt="IT Guidance 4">
-        </div>
-        <div class="comparison-sep" style="height:16px;background:transparent"></div>
-        <div class="comparison-row c5">
-          <img src="assets/images/3d/toys4k/e1_condition.png"   alt="Condition 5">
-          <img src="assets/images/3d/toys4k/e1_ours.png"        alt="Ours 5" class="ours-img">
-          <img src="assets/images/3d/toys4k/e1_std_ft.png"      alt="Standard FT 5">
-          <img src="assets/images/3d/toys4k/e1_ft_align.png"    alt="FT+align 5">
-          <img src="assets/images/3d/toys4k/e1_it_guidance.png" alt="IT Guidance 5">
-        </div>
-        <div class="comparison-sep"></div>
-        <div class="comparison-row c5">
-          <img src="assets/images/3d/toys4k/e2_condition.png"   alt="Condition 6">
-          <img src="assets/images/3d/toys4k/e2_ours.png"        alt="Ours 6" class="ours-img">
-          <img src="assets/images/3d/toys4k/e2_std_ft.png"      alt="Standard FT 6">
-          <img src="assets/images/3d/toys4k/e2_ft_align.png"    alt="FT+align 6">
-          <img src="assets/images/3d/toys4k/e2_it_guidance.png" alt="IT Guidance 6">
-        </div>
-        <div class="comparison-sep"></div>
-        <div class="comparison-row c5">
-          <img src="assets/images/3d/toys4k/e3_condition.png"   alt="Condition 7">
-          <img src="assets/images/3d/toys4k/e3_ours.png"        alt="Ours 7" class="ours-img">
-          <img src="assets/images/3d/toys4k/e3_std_ft.png"      alt="Standard FT 7">
-          <img src="assets/images/3d/toys4k/e3_ft_align.png"    alt="FT+align 7">
-          <img src="assets/images/3d/toys4k/e3_it_guidance.png" alt="IT Guidance 7">
-        </div>
-        <div class="comparison-sep"></div>
-        <div class="comparison-row c5">
-          <img src="assets/images/3d/toys4k/e4_condition.png"   alt="Condition 8">
-          <img src="assets/images/3d/toys4k/e4_ours.png"        alt="Ours 8" class="ours-img">
-          <img src="assets/images/3d/toys4k/e4_std_ft.png"      alt="Standard FT 8">
-          <img src="assets/images/3d/toys4k/e4_ft_align.png"    alt="FT+align 8">
-          <img src="assets/images/3d/toys4k/e4_it_guidance.png" alt="IT Guidance 8">
-        </div>
-      </div>
-    </div><!-- /subsection 1 -->
+    <div class="comparison-grid">
 
-    <!-- ── Subsection 2: 3D turntable video comparison ───────────── -->
-    <div class="subsection">
-      <h3 class="sub-heading">3D Turntable Comparison</h3>
-      <p class="sub-lead">
-        360° render loops on the same asset across all methods.
-        Press play to rotate them together.
-      </p>
+      <!-- ── ObjaverseXL ──────────────────────────────────────────── -->
 
-      <!-- ✦ Each .vid-row: condition image left + 3 synced videos right           -->
-      <!-- ✦ One play button per row starts all 3 videos simultaneously             -->
-      <!-- ✦ Swap placeholder divs for <video autoplay loop muted playsinline>      -->
-      <!--   when MP4s are ready; the JS handler targets video elements inside      -->
-      <!--   .vid-videos-wrap automatically                                          -->
-
-      <div class="vid-row">
-        <div class="vid-cond">
-          <img class="vid-cond-img" src="assets/images/3d/objaverse/e1_condition.png" alt="Condition">
-          <p class="vid-label">Condition</p>
+      <!-- e1: image comparison + 360° video sub-row -->
+      <!-- ✦ Swap placeholder divs for <video loop muted playsinline> when MP4s ready -->
+      <div class="example-block">
+        <div class="comparison-row c5">
+          <img src="assets/images/3d/objaverse/e1_condition.png"   alt="Condition (OXL 1)">
+          <img src="assets/images/3d/objaverse/e1_ours.png"        alt="Ours (OXL 1)"        class="ours-img">
+          <img src="assets/images/3d/objaverse/e1_std_ft.png"      alt="Standard FT (OXL 1)">
+          <img src="assets/images/3d/objaverse/e1_ft_align.png"    alt="FT+align (OXL 1)">
+          <img src="assets/images/3d/objaverse/e1_it_guidance.png" alt="IT Guidance (OXL 1)">
         </div>
-        <div class="vid-videos-wrap">
-          <div class="vid-videos-grid">
-            <div class="vid-card">
-              <div class="vid-inner">
-                <!-- ✦ assets/videos/objaverse_e1_ours.mp4 -->
-                <div class="placeholder video"><i class="fas fa-cube"></i><p>Ours</p><code>assets/videos/objaverse_e1_ours.mp4</code></div>
-              </div>
-              <p class="vid-label ours">Ours</p>
-            </div>
-            <div class="vid-card">
-              <div class="vid-inner">
-                <!-- ✦ assets/videos/objaverse_e1_std_ft.mp4 -->
-                <div class="placeholder video"><i class="fas fa-cube"></i><p>Standard FT</p><code>assets/videos/objaverse_e1_std_ft.mp4</code></div>
-              </div>
-              <p class="vid-label">Standard FT</p>
-            </div>
-            <div class="vid-card">
-              <div class="vid-inner">
-                <!-- ✦ assets/videos/objaverse_e1_it_guidance.mp4 -->
-                <div class="placeholder video"><i class="fas fa-cube"></i><p>IT Guidance</p><code>assets/videos/objaverse_e1_it_guidance.mp4</code></div>
-              </div>
-              <p class="vid-label">IT Guidance</p>
-            </div>
+        <div class="vid-row-5">
+          <div></div><!-- col 1: condition — no video -->
+          <div class="vid-inner"><!-- ✦ assets/videos/objaverse_e1_ours.mp4 -->
+            <div class="placeholder video"><i class="fas fa-cube"></i><p>Ours</p><code>assets/videos/objaverse_e1_ours.mp4</code></div>
           </div>
-          <button class="play-all-btn js-play-row" aria-label="Play all">
+          <div class="vid-inner"><!-- ✦ assets/videos/objaverse_e1_std_ft.mp4 -->
+            <div class="placeholder video"><i class="fas fa-cube"></i><p>Standard FT</p><code>assets/videos/objaverse_e1_std_ft.mp4</code></div>
+          </div>
+          <div></div><!-- col 4: FT+align — no video -->
+          <div class="vid-inner"><!-- ✦ assets/videos/objaverse_e1_it_guidance.mp4 -->
+            <div class="placeholder video"><i class="fas fa-cube"></i><p>IT Guidance</p><code>assets/videos/objaverse_e1_it_guidance.mp4</code></div>
+          </div>
+          <button class="play-all-btn js-play-row" aria-label="Play 360° turntables">
             <span class="play-icon"><i class="fas fa-play"></i></span>
           </button>
         </div>
       </div>
 
-      <div class="vid-row">
-        <div class="vid-cond">
-          <img class="vid-cond-img" src="assets/images/3d/toys4k/e1_condition.png" alt="Condition">
-          <p class="vid-label">Condition</p>
+      <div class="comparison-sep"></div>
+
+      <div class="comparison-row c5">
+        <img src="assets/images/3d/objaverse/e2_condition.png"   alt="Condition (OXL 2)">
+        <img src="assets/images/3d/objaverse/e2_ours.png"        alt="Ours (OXL 2)"        class="ours-img">
+        <img src="assets/images/3d/objaverse/e2_std_ft.png"      alt="Standard FT (OXL 2)">
+        <img src="assets/images/3d/objaverse/e2_ft_align.png"    alt="FT+align (OXL 2)">
+        <img src="assets/images/3d/objaverse/e2_it_guidance.png" alt="IT Guidance (OXL 2)">
+      </div>
+
+      <div class="comparison-sep"></div>
+
+      <div class="comparison-row c5">
+        <img src="assets/images/3d/objaverse/e3_condition.png"   alt="Condition (OXL 3)">
+        <img src="assets/images/3d/objaverse/e3_ours.png"        alt="Ours (OXL 3)"        class="ours-img">
+        <img src="assets/images/3d/objaverse/e3_std_ft.png"      alt="Standard FT (OXL 3)">
+        <img src="assets/images/3d/objaverse/e3_ft_align.png"    alt="FT+align (OXL 3)">
+        <img src="assets/images/3d/objaverse/e3_it_guidance.png" alt="IT Guidance (OXL 3)">
+      </div>
+
+      <div class="comparison-sep"></div>
+
+      <div class="comparison-row c5">
+        <img src="assets/images/3d/objaverse/e4_condition.png"   alt="Condition (OXL 4)">
+        <img src="assets/images/3d/objaverse/e4_ours.png"        alt="Ours (OXL 4)"        class="ours-img">
+        <img src="assets/images/3d/objaverse/e4_std_ft.png"      alt="Standard FT (OXL 4)">
+        <img src="assets/images/3d/objaverse/e4_ft_align.png"    alt="FT+align (OXL 4)">
+        <img src="assets/images/3d/objaverse/e4_it_guidance.png" alt="IT Guidance (OXL 4)">
+      </div>
+
+      <!-- dataset gap -->
+      <div class="comparison-sep" style="height:20px;background:transparent"></div>
+
+      <!-- ── Toys4K ────────────────────────────────────────────────── -->
+
+      <!-- e1: image comparison + 360° video sub-row -->
+      <div class="example-block">
+        <div class="comparison-row c5">
+          <img src="assets/images/3d/toys4k/e1_condition.png"   alt="Condition (T4K 1)">
+          <img src="assets/images/3d/toys4k/e1_ours.png"        alt="Ours (T4K 1)"        class="ours-img">
+          <img src="assets/images/3d/toys4k/e1_std_ft.png"      alt="Standard FT (T4K 1)">
+          <img src="assets/images/3d/toys4k/e1_ft_align.png"    alt="FT+align (T4K 1)">
+          <img src="assets/images/3d/toys4k/e1_it_guidance.png" alt="IT Guidance (T4K 1)">
         </div>
-        <div class="vid-videos-wrap">
-          <div class="vid-videos-grid">
-            <div class="vid-card">
-              <div class="vid-inner">
-                <!-- ✦ assets/videos/toys4k_e1_ours.mp4 -->
-                <div class="placeholder video"><i class="fas fa-cube"></i><p>Ours</p><code>assets/videos/toys4k_e1_ours.mp4</code></div>
-              </div>
-              <p class="vid-label ours">Ours</p>
-            </div>
-            <div class="vid-card">
-              <div class="vid-inner">
-                <!-- ✦ assets/videos/toys4k_e1_std_ft.mp4 -->
-                <div class="placeholder video"><i class="fas fa-cube"></i><p>Standard FT</p><code>assets/videos/toys4k_e1_std_ft.mp4</code></div>
-              </div>
-              <p class="vid-label">Standard FT</p>
-            </div>
-            <div class="vid-card">
-              <div class="vid-inner">
-                <!-- ✦ assets/videos/toys4k_e1_it_guidance.mp4 -->
-                <div class="placeholder video"><i class="fas fa-cube"></i><p>IT Guidance</p><code>assets/videos/toys4k_e1_it_guidance.mp4</code></div>
-              </div>
-              <p class="vid-label">IT Guidance</p>
-            </div>
+        <div class="vid-row-5">
+          <div></div><!-- col 1: condition — no video -->
+          <div class="vid-inner"><!-- ✦ assets/videos/toys4k_e1_ours.mp4 -->
+            <div class="placeholder video"><i class="fas fa-cube"></i><p>Ours</p><code>assets/videos/toys4k_e1_ours.mp4</code></div>
           </div>
-          <button class="play-all-btn js-play-row" aria-label="Play all">
+          <div class="vid-inner"><!-- ✦ assets/videos/toys4k_e1_std_ft.mp4 -->
+            <div class="placeholder video"><i class="fas fa-cube"></i><p>Standard FT</p><code>assets/videos/toys4k_e1_std_ft.mp4</code></div>
+          </div>
+          <div></div><!-- col 4: FT+align — no video -->
+          <div class="vid-inner"><!-- ✦ assets/videos/toys4k_e1_it_guidance.mp4 -->
+            <div class="placeholder video"><i class="fas fa-cube"></i><p>IT Guidance</p><code>assets/videos/toys4k_e1_it_guidance.mp4</code></div>
+          </div>
+          <button class="play-all-btn js-play-row" aria-label="Play 360° turntables">
             <span class="play-icon"><i class="fas fa-play"></i></span>
           </button>
         </div>
       </div>
 
-    </div><!-- /subsection 2 -->
+      <div class="comparison-sep"></div>
 
+      <div class="comparison-row c5">
+        <img src="assets/images/3d/toys4k/e2_condition.png"   alt="Condition (T4K 2)">
+        <img src="assets/images/3d/toys4k/e2_ours.png"        alt="Ours (T4K 2)"        class="ours-img">
+        <img src="assets/images/3d/toys4k/e2_std_ft.png"      alt="Standard FT (T4K 2)">
+        <img src="assets/images/3d/toys4k/e2_ft_align.png"    alt="FT+align (T4K 2)">
+        <img src="assets/images/3d/toys4k/e2_it_guidance.png" alt="IT Guidance (T4K 2)">
+      </div>
+
+      <div class="comparison-sep"></div>
+
+      <div class="comparison-row c5">
+        <img src="assets/images/3d/toys4k/e3_condition.png"   alt="Condition (T4K 3)">
+        <img src="assets/images/3d/toys4k/e3_ours.png"        alt="Ours (T4K 3)"        class="ours-img">
+        <img src="assets/images/3d/toys4k/e3_std_ft.png"      alt="Standard FT (T4K 3)">
+        <img src="assets/images/3d/toys4k/e3_ft_align.png"    alt="FT+align (T4K 3)">
+        <img src="assets/images/3d/toys4k/e3_it_guidance.png" alt="IT Guidance (T4K 3)">
+      </div>
+
+      <div class="comparison-sep"></div>
+
+      <div class="comparison-row c5">
+        <img src="assets/images/3d/toys4k/e4_condition.png"   alt="Condition (T4K 4)">
+        <img src="assets/images/3d/toys4k/e4_ours.png"        alt="Ours (T4K 4)"        class="ours-img">
+        <img src="assets/images/3d/toys4k/e4_std_ft.png"      alt="Standard FT (T4K 4)">
+        <img src="assets/images/3d/toys4k/e4_ft_align.png"    alt="FT+align (T4K 4)">
+        <img src="assets/images/3d/toys4k/e4_it_guidance.png" alt="IT Guidance (T4K 4)">
+      </div>
+
+    </div><!-- /comparison-grid -->
   </div>
 </section>
 
