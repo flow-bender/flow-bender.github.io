@@ -332,11 +332,10 @@
   <div class="container">
     <h2 class="section-heading">JPEG Restoration — Non-Differentiable Operator</h2>
     <p class="section-lead">
-      JPEG compression is a non-differentiable operator — its gradient is undefined, making
-      standard inference-time guidance inapplicable. FlowBender's zero-order variant sidesteps
-      this entirely: the feedback signal is the <em>measurement residual</em>
-      R(H(x̂<sub>1</sub>), y), requiring no gradient through the forward operator. The model is
-      trained to correct from this residual alone, and outperforms all differentiable baselines.
+      JPEG compression is non-differentiable, making gradient-based guidance inapplicable.
+      FlowBender's zero-order variant uses the pixel-space residual between the re-compressed
+      estimate and the input as feedback — no gradients required. It is compared against
+      Standard FT, the only other applicable baseline, and consistently outperforms it.
     </p>
 
     <div class="col-labels cols-4">
@@ -382,10 +381,7 @@
       </div>
     </div>
     <p class="fig-caption">
-      <strong>JPEG Restoration.</strong> No guidance method can be applied here — the forward
-      operator has no well-defined gradient. FlowBender (Zero-Order) uses the pixel-space residual
-      R(H(x̂<sub>1</sub>), y) as feedback and recovers clean, artifact-free images that standard
-      fine-tuning cannot match.
+      <strong>JPEG Restoration.</strong> FlowBender's zero-order variant recovers clean images from heavily compressed inputs, reducing color banding and quantization artifacts that standard fine-tuning cannot resolve.
     </p>
 
   </div>
