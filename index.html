@@ -227,11 +227,11 @@
     <div class="method-cards">
       <div class="method-card">
         <h3>Feedback-Aware Training</h3>
-        <p>FlowBender uses a two-pass strategy at each denoising step. An unguided <em>look-ahead</em> pass estimates the clean signal; the forward operator is applied to this estimate to measure its deviation from the condition, yielding the feedback signal. A second, <em>refinement</em> pass then consumes this signal to produce the corrected velocity.</p>
+        <p>FlowBender uses a two-pass strategy at each denoising step. An unguided <em>look-ahead</em> pass estimates the clean signal; the forward operator is then applied to this estimate to measure its deviation from the condition signal, yielding the feedback. A second, <em>refinement</em> pass consumes this feedback to produce the corrected velocity, closing the loop.</p>
       </div>
       <div class="method-card">
         <h3>Feedback Variants</h3>
-        <p>We propose two feedback variants. For differentiable ℋ, the <em>first-order</em> signal <strong>s<sub>t</sub></strong> is the gradient ∇ℒ(ℋ(<strong>x̂<sub>1</sub></strong>), <strong>y</strong>) — pointing in the direction of alignment correction. For non-differentiable or black-box operators (e.g. JPEG compression), the <em>zero-order</em> variant uses the residual ℛ(ℋ(<strong>x̂<sub>1</sub></strong>), <strong>y</strong>) directly, requiring no gradients through ℋ. A hybrid option combines both.</p>
+        <p>We propose two feedback variants. For differentiable operators, the <em>first-order</em> variant uses the gradient of the alignment loss — pointing in the direction of error correction. For non-differentiable or black-box operators (e.g. JPEG compression), the <em>zero-order</em> variant uses the measurement residual directly, requiring no gradients. A hybrid option combines both.</p>
       </div>
       <div class="method-card">
         <h3>Inference Prior-Step Shortcut</h3>
