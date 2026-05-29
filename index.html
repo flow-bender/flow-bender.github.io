@@ -250,9 +250,10 @@
   <div class="container">
     <h2 class="section-heading">Results: Image Tasks</h2>
     <p class="section-lead">
-      We fine-tune Stable Diffusion 3.5 Large with ControlNet / LoRA adapters on Unsplash-25K
-      across depth-to-image and edge-to-image translation. For full quantitative results
-      see the paper.
+      We fine-tune Stable Diffusion 3.5 Large with ControlNet on Unsplash-25K for depth-to-RGB
+      and edge-to-RGB translation. FlowBender consistently outperforms supervised baselines and
+      inference-time guidance on both fidelity and plausibility — without trading one for the other.
+      Super-resolution results and full quantitative comparisons are available in the paper.
     </p>
 
     <div class="task-tabs" role="tablist">
@@ -287,9 +288,7 @@
         </div>
       </div>
       <p class="fig-caption">
-        <strong>Depth → RGB.</strong> FlowBender produces images whose re-extracted depth matches
-        the input more faithfully while maintaining photorealism — a direct result of the
-        gradient-based feedback signal from the depth predictor.
+        <strong>Depth → RGB.</strong> Both FlowBender variants closely follow the input depth condition, while baselines show structural misalignments highlighted by red boxes.
       </p>
     </div>
 
@@ -320,9 +319,7 @@
         </div>
       </div>
       <p class="fig-caption">
-        <strong>Edge → RGB.</strong> The feedback-aware training generalizes to edge maps.
-        FlowBender faithfully reproduces the structural contours of the input while generating
-        photorealistic textures.
+        <strong>Edge → RGB.</strong> Both FlowBender variants adhere to the input edge structure, while baselines show misalignments with the given edges, highlighted by red boxes.
       </p>
     </div>
 
