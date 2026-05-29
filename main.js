@@ -75,6 +75,23 @@ if (copyBtn) {
   });
 }
 
+// ── Sync-start videos in each row when row enters view ───────────
+const vidRowObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const videos = Array.from(entry.target.querySelectorAll('video'));
+    if (!videos.length) return;
+    // Reset all to same position, then play in one rAF tick
+    videos.forEach(v => { v.currentTime = 0; });
+    requestAnimationFrame(() => videos.forEach(v => v.play()));
+    vidRowObs.unobserve(entry.target);
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.vid-row-5').forEach(row => {
+  if (row.querySelector('video')) vidRowObs.observe(row);
+});
+
 // ── Smooth-scroll BibTeX button ──────────────────────────────────
 document.querySelector('.js-scroll-bibtex')?.addEventListener('click', e => {
   e.preventDefault();
