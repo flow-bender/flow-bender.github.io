@@ -227,7 +227,7 @@
     <div class="method-cards">
       <div class="method-card">
         <h3>Feedback-Aware Training</h3>
-        <p>FlowBender uses a two-pass strategy at each denoising step. A <em>look-ahead</em> pass estimates the clean signal <strong>x̂<sub>1</sub></strong>; applying ℋ to <strong>x̂<sub>1</sub></strong> measures the deviation from the condition <strong>y</strong>, from which the feedback signal <strong>s<sub>t</sub></strong> is derived. A second, <em>refinement</em> pass then consumes <strong>s<sub>t</sub></strong> to produce the corrected velocity.</p>
+        <p>FlowBender uses a two-pass strategy at each denoising step. An unguided <em>look-ahead</em> pass estimates the clean signal; the forward operator is applied to this estimate to measure its deviation from the condition, yielding the feedback signal. A second, <em>refinement</em> pass then consumes this signal to produce the corrected velocity.</p>
       </div>
       <div class="method-card">
         <h3>Feedback Variants</h3>
@@ -235,7 +235,7 @@
       </div>
       <div class="method-card">
         <h3>Inference Prior-Step Shortcut</h3>
-        <p>The two-pass strategy doubles inference cost to 2<em>N</em> evaluations for an <em>N</em>-step trajectory. To alleviate this, we exploit the temporal correlation of feedback signals, which are strongly correlated across adjacent steps throughout sampling and increasingly so as <em>t</em> → 1. Above a threshold <em>t</em><sub>thresh</sub>, the look-ahead pass is skipped; instead, the prior step's cached <strong>x̂<sub>1</sub></strong> serves as the feedback source — reducing cost to as few as <em>N</em>+1 evaluations while retaining closed-loop corrective benefits.</p>
+        <p>The two-pass strategy doubles inference cost. To alleviate this, we exploit the temporal correlation of feedback signals — strongly correlated at adjacent steps, increasingly so as sampling progresses. Above a time threshold, the look-ahead pass is skipped and the prior step's estimate is reused instead, cutting cost from 2N to as few as N+1 evaluations with minimal quality loss.</p>
       </div>
     </div>
 
