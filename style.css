@@ -299,18 +299,18 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
   border-radius: 0 0 var(--radius) var(--radius);
 }
 
-/* Match colors from the method figure */
+/* Colors sampled directly from method-figure.pdf */
 .method-card:nth-child(1) {
-  --mc-color: #f59e0b;   /* amber — matches v_θ / L_FA boxes */
-  --mc-bg:    #fffbeb;
+  --mc-color: #edb471;   /* warm amber — matches L_FA / v_θ boxes */
+  --mc-bg:    #f6f4e4;   /* warm cream — left panel background */
 }
 .method-card:nth-child(2) {
-  --mc-color: #60a5fa;   /* light blue — matches H / R boxes */
-  --mc-bg:    #eff6ff;
+  --mc-color: #95b3c4;   /* muted steel blue — top-right panel accent */
+  --mc-bg:    #eaf7fd;   /* cyan-blue — top-right panel background */
 }
 .method-card:nth-child(3) {
-  --mc-color: #34d399;   /* mint/emerald — matches x̂₁ Cache box */
-  --mc-bg:    #ecfdf5;
+  --mc-color: #638080;   /* dark muted teal — bottom-right panel border */
+  --mc-bg:    #e4f2ef;   /* light teal — bottom-right panel background */
 }
 
 .method-card h3 {

@@ -235,7 +235,7 @@
       </div>
       <div class="method-card">
         <h3>Inference Prior-Step Shortcut</h3>
-        <p>The two-pass strategy doubles inference cost. To alleviate this, we exploit the temporal correlation of feedback signals — strongly correlated at adjacent steps, increasingly so as sampling progresses. Above a time threshold, the look-ahead pass is skipped and the prior step's estimate is reused instead, cutting cost from 2N to as few as N+1 evaluations with minimal quality loss.</p>
+        <p>The two-pass strategy doubles inference cost. To alleviate this, we exploit the temporal correlation of feedback signals — strongly correlated at adjacent steps, increasingly so as sampling progresses. Above a time threshold, the look-ahead pass is skipped and the prior step's estimate is reused instead, cutting cost from 2N to as few as N+1 evaluations while retaining the closed-loop corrective benefits.</p>
       </div>
     </div>
 
