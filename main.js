@@ -81,13 +81,3 @@ document.querySelector('.js-scroll-bibtex')?.addEventListener('click', e => {
   document.getElementById('bibtex')?.scrollIntoView({ behavior: 'smooth' });
 });
 
-// ── 3D video play buttons (one per example block, plays all videos together) ────
-document.querySelectorAll('.js-play-row').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const row = btn.closest('.vid-row-5');
-    const videos = row?.querySelectorAll('video');
-    if (!videos || !videos.length) return;
-    btn.style.display = 'none';
-    videos.forEach(v => v.play());
-  });
-});

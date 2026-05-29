@@ -46,11 +46,11 @@
     </div>
 
     <div class="hero-actions">
-      <a href="#" class="btn btn-primary disabled" title="Paper coming soon">
+      <a href="assets/_NeurIPS_2026__FlowBender.pdf" class="btn btn-primary" target="_blank" rel="noopener">
         <i class="fas fa-file-pdf"></i> Paper
       </a>
       <a href="#" class="btn btn-outline disabled" title="Code coming soon">
-        <i class="fab fa-github"></i> Code
+        <i class="fab fa-github"></i> Code — coming soon
       </a>
       <a href="#bibtex" class="btn btn-outline js-scroll-bibtex">
         <i class="fas fa-quote-right"></i> BibTeX
@@ -66,18 +66,15 @@
 <section class="teaser">
   <div class="container">
 
-    <!-- ✦ Replace with: assets/images/teaser.png (method-figure.pdf → PNG, or an animated GIF) -->
+    <!-- ✦ Teaser figure — uncomment when ready
     <figure class="teaser-figure">
-      <div class="placeholder tall">
-        <i class="fas fa-image"></i>
-        <p>Teaser / method overview figure</p>
-        <code>assets/images/teaser.png</code>
-      </div>
+      <img src="assets/images/teaser.png" alt="FlowBender teaser">
     </figure>
+    -->
 
     <div class="tldr-card">
       <span class="tldr-tag">TL;DR</span>
-      <p class="tldr">FlowBender trains conditional flow models to <em>use their own alignment error as a first-class input</em> — improving condition fidelity and sample plausibility simultaneously across 2D and 3D tasks, rather than trading one for the other.</p>
+      <p class="tldr">FlowBender trains conditional flow models to use their own alignment error as a first-class input — improving condition fidelity and sample plausibility simultaneously across 2D and 3D tasks, rather than trading one for the other.</p>
     </div>
 
   </div>
@@ -413,7 +410,7 @@
       <!-- ── ObjaverseXL ──────────────────────────────────────────── -->
 
       <!-- e1: image comparison + 360° video sub-row -->
-      <!-- ✦ Swap placeholder divs for <video loop muted playsinline> when MP4s ready -->
+      <!-- ✦ Swap placeholder divs for <video autoplay loop muted playsinline> when MP4s ready -->
       <div class="example-block">
         <div class="comparison-row c5">
           <img src="assets/images/3d/objaverse/e1_condition.png"   alt="Condition (OXL 1)">
@@ -424,11 +421,10 @@
         </div>
         <div class="vid-row-5">
           <div></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e1_ours.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e1_std_ft.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e1_ft_align.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e1_it_guidance.mp4" type="video/mp4"></video></div>
-          <button class="play-all-btn js-play-row" aria-label="Play"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e1_ours.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e1_std_ft.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e1_ft_align.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e1_it_guidance.mp4" type="video/mp4"></video></div>
         </div>
       </div>
 
@@ -444,11 +440,10 @@
         </div>
         <div class="vid-row-5">
           <div></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e2_ours.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e2_std_ft.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e2_ft_align.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e2_it_guidance.mp4" type="video/mp4"></video></div>
-          <button class="play-all-btn js-play-row" aria-label="Play"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e2_ours.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e2_std_ft.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e2_ft_align.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e2_it_guidance.mp4" type="video/mp4"></video></div>
         </div>
       </div>
 
@@ -464,11 +459,10 @@
         </div>
         <div class="vid-row-5">
           <div></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e3_ours.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e3_std_ft.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e3_ft_align.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e3_it_guidance.mp4" type="video/mp4"></video></div>
-          <button class="play-all-btn js-play-row" aria-label="Play"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e3_ours.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e3_std_ft.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e3_ft_align.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e3_it_guidance.mp4" type="video/mp4"></video></div>
         </div>
       </div>
 
@@ -484,11 +478,10 @@
         </div>
         <div class="vid-row-5">
           <div></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e4_ours.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e4_std_ft.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e4_ft_align.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/objaverse_e4_it_guidance.mp4" type="video/mp4"></video></div>
-          <button class="play-all-btn js-play-row" aria-label="Play"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e4_ours.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e4_std_ft.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e4_ft_align.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/objaverse_e4_it_guidance.mp4" type="video/mp4"></video></div>
         </div>
       </div>
 
@@ -507,11 +500,10 @@
         </div>
         <div class="vid-row-5">
           <div></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e1_ours.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e1_std_ft.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e1_ft_align.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e1_it_guidance.mp4" type="video/mp4"></video></div>
-          <button class="play-all-btn js-play-row" aria-label="Play"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e1_ours.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e1_std_ft.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e1_ft_align.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e1_it_guidance.mp4" type="video/mp4"></video></div>
         </div>
       </div>
 
@@ -527,11 +519,10 @@
         </div>
         <div class="vid-row-5">
           <div></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e2_ours.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e2_std_ft.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e2_ft_align.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e2_it_guidance.mp4" type="video/mp4"></video></div>
-          <button class="play-all-btn js-play-row" aria-label="Play"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e2_ours.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e2_std_ft.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e2_ft_align.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e2_it_guidance.mp4" type="video/mp4"></video></div>
         </div>
       </div>
 
@@ -547,11 +538,10 @@
         </div>
         <div class="vid-row-5">
           <div></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e3_ours.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e3_std_ft.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e3_ft_align.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e3_it_guidance.mp4" type="video/mp4"></video></div>
-          <button class="play-all-btn js-play-row" aria-label="Play"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e3_ours.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e3_std_ft.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e3_ft_align.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e3_it_guidance.mp4" type="video/mp4"></video></div>
         </div>
       </div>
 
@@ -567,11 +557,10 @@
         </div>
         <div class="vid-row-5">
           <div></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e4_ours.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e4_std_ft.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e4_ft_align.mp4" type="video/mp4"></video></div>
-          <div class="vid-inner"><video loop muted playsinline><source src="assets/videos/toys4k_e4_it_guidance.mp4" type="video/mp4"></video></div>
-          <button class="play-all-btn js-play-row" aria-label="Play"><span class="play-icon"><i class="fas fa-play"></i></span></button>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e4_ours.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e4_std_ft.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e4_ft_align.mp4" type="video/mp4"></video></div>
+          <div class="vid-inner"><video autoplay loop muted playsinline><source src="assets/videos/toys4k_e4_it_guidance.mp4" type="video/mp4"></video></div>
         </div>
       </div>
 
@@ -605,6 +594,7 @@
 <footer class="footer">
   <div class="container">
     <p>Daniel Gilo, Sven Elflein, Ido Sobol, Or Litany · Technion &amp; NVIDIA · 2026</p>
+    <p>Contact: <a href="mailto:danielgilo@cs.technion.ac.il">danielgilo@cs.technion.ac.il</a></p>
     <p class="footer-credits">
       Design inspired by
       <a href="https://idosobol.github.io/realiz3d/" target="_blank" rel="noopener">Realiz3D</a>
