@@ -76,15 +76,28 @@ if (copyBtn) {
 }
 
 // ── Sync-start videos in each row when row enters view ───────────
+// Wait for every video to reach canplaythrough (buffered), then
+// reset all to t=0 and fire play() in one rAF — as tight as browsers allow.
 const vidRowObs = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     const videos = Array.from(entry.target.querySelectorAll('video'));
     if (!videos.length) return;
-    // Reset all to same position, then play in one rAF tick
-    videos.forEach(v => { v.currentTime = 0; });
-    requestAnimationFrame(() => videos.forEach(v => v.play()));
     vidRowObs.unobserve(entry.target);
+
+    const ready = videos.map(v =>
+      v.readyState >= 3
+        ? Promise.resolve()
+        : new Promise(res => {
+            v.addEventListener('canplaythrough', res, { once: true });
+            setTimeout(res, 3000); // fallback — start anyway after 3s
+          })
+    );
+
+    Promise.all(ready).then(() => {
+      videos.forEach(v => { v.currentTime = 0; });
+      requestAnimationFrame(() => videos.forEach(v => v.play()));
+    });
   });
 }, { threshold: 0.3 });
 
