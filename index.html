@@ -217,8 +217,7 @@
   <div class="container">
     <h2 class="section-heading">Method</h2>
     <p class="section-lead">
-      A two-pass training strategy that teaches the model to read and respond to its own
-      alignment error at every denoising step.
+      FlowBender transforms conditional generation into a closed-loop system by training the model to act on its own alignment error as a first-class input.
     </p>
 
     <figure class="full-figure">
@@ -228,32 +227,15 @@
     <div class="method-cards">
       <div class="method-card">
         <h3>Feedback-Aware Training</h3>
-        <p>
-          Two forward passes per denoising step. An unguided look-ahead estimates
-          <strong>x̂<sub>1</sub></strong>; the resulting alignment error
-          <strong>s<sub>t</sub></strong> is fed back to a refinement pass that produces
-          the corrected velocity. A stop-gradient on <strong>s<sub>t</sub></strong> and
-          random nullification during training keep the unguided regime intact.
-        </p>
+        <p>FlowBender uses a two-pass strategy at each denoising step. A <em>look-ahead</em> pass estimates the clean signal <strong>x̂<sub>1</sub></strong>; applying ℋ to <strong>x̂<sub>1</sub></strong> measures the deviation from the condition <strong>y</strong>, from which the feedback signal <strong>s<sub>t</sub></strong> is derived. A second, <em>refinement</em> pass then consumes <strong>s<sub>t</sub></strong> to produce the corrected velocity.</p>
       </div>
       <div class="method-card">
         <h3>Feedback Variants</h3>
-        <p>
-          For differentiable operators, <strong>s<sub>t</sub></strong> is the gradient
-          of the alignment loss — a first-order correction signal. For non-differentiable
-          operators (e.g., JPEG compression), a zero-order variant uses the measurement
-          residual <strong>R(H(x̂<sub>1</sub>), y)</strong> directly. A hybrid option
-          concatenates both.
-        </p>
+        <p>We propose two feedback variants. For differentiable ℋ, the <em>first-order</em> signal <strong>s<sub>t</sub></strong> is the gradient ∇ℒ(ℋ(<strong>x̂<sub>1</sub></strong>), <strong>y</strong>) — pointing in the direction of alignment correction. For non-differentiable or black-box operators (e.g. JPEG compression), the <em>zero-order</em> variant uses the residual ℛ(ℋ(<strong>x̂<sub>1</sub></strong>), <strong>y</strong>) directly, requiring no gradients through ℋ. A hybrid option combines both.</p>
       </div>
       <div class="method-card">
         <h3>Inference Prior-Step Shortcut</h3>
-        <p>
-          Feedback signals are strongly correlated across adjacent timesteps. Below a
-          threshold <em>t</em><sub>thresh</sub>, the prior step's look-ahead estimate is
-          reused rather than recomputed — reducing inference cost from <em>2N</em> to
-          <em>N&thinsp;+&thinsp;1</em> evaluations with minimal impact on quality.
-        </p>
+        <p>The two-pass strategy doubles inference cost to 2<em>N</em> evaluations for an <em>N</em>-step trajectory. To alleviate this, we exploit the temporal correlation of feedback signals, which are strongly correlated across adjacent steps throughout sampling and increasingly so as <em>t</em> → 1. Above a threshold <em>t</em><sub>thresh</sub>, the look-ahead pass is skipped; instead, the prior step's cached <strong>x̂<sub>1</sub></strong> serves as the feedback source — reducing cost to as few as <em>N</em>+1 evaluations while retaining closed-loop corrective benefits.</p>
       </div>
     </div>
 
