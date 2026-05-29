@@ -284,7 +284,7 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
    METHOD
 ================================================================ */
 .full-figure { margin-bottom: 2.5rem; }
-.full-figure img { width: 100%; }
+.full-figure img { width: 100%; border-radius: 0; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; }
 
 .method-cards {
   display: grid;
