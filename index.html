@@ -77,10 +77,7 @@
 
     <div class="tldr-card">
       <span class="tldr-tag">TL;DR</span>
-      <p class="tldr">We train conditional diffusion/flow models to <em>read their own
-      alignment error</em> at inference time — a closed-loop correction policy that improves
-      both condition fidelity and sample plausibility simultaneously, without the fidelity–plausibility
-      trade-off of hand-tuned guidance.</p>
+      <p class="tldr">FlowBender trains conditional flow models to <em>use their own alignment error as a first-class input</em> — improving condition fidelity and sample plausibility simultaneously across 2D and 3D tasks, rather than trading one for the other.</p>
     </div>
 
   </div>
@@ -137,8 +134,7 @@
   <div class="container">
     <h2 class="section-heading">The Problem, Step by Step</h2>
     <p class="section-lead">
-      A 2D toy walks through why existing paradigms fall short — and sets up what
-      a closed-loop correction policy can achieve.
+      A 2D toy example demonstrates where existing conditional generation paradigms fall short — and what a closed-loop correction policy achieves instead.
     </p>
 
     <div class="story">
@@ -152,9 +148,7 @@
           <div class="story-text">
             <span class="story-tag">01</span>
             <h3>The Goal</h3>
-            <p>The target is a multi-arm spiral. A measurement <strong>y&thinsp;=&thinsp;H(x)</strong>
-            identifies which arm a sample belongs to. An ideal conditional model should cover
-            each arc fully — generating diverse samples that lie precisely on the correct structure.</p>
+            <p>The target is a 2D Archimedean spiral, partitioned into four arcs — one per quadrant, each spanning a distinct radius range. Each arc is a class, distinguished by color. Given a class label, a conditional flow model must generate samples that lie on the spiral and fall within the correct arc.</p>
           </div>
         </div>
       </div>
@@ -164,11 +158,8 @@
         <div class="story-inner">
           <div class="story-text">
             <span class="story-tag">02</span>
-            <h3>Standard Conditional FM Misses the Constraint</h3>
-            <p>A model fine-tuned on supervised pairs learns to approximate the conditional
-            distribution statistically, but is never asked to verify its output. Samples roughly
-            follow the spiral shape but don't commit — each arm scatters around the true arc
-            instead of lying precisely on it.</p>
+            <h3>Standard Conditional FM Fails on Both Counts</h3>
+            <p>A model trained on supervised pairs approximates the conditional distribution — but acts as a black box at inference, never verifying its output. The failures are twofold: samples, whose color marks the requested class, frequently land on the wrong quadrant — violating the class constraint — and often miss the spiral distribution altogether — failing on both fidelity and plausibility.</p>
           </div>
           <figure class="story-fig">
             <img src="assets/images/toy_conditional.png" alt="Standard conditional FM results">
@@ -181,24 +172,21 @@
         <div class="story-guidance">
           <div class="story-guidance-hdr">
             <span class="story-tag">03</span>
-            <h3>Inference-Time Guidance Has No Good Setting</h3>
-            <p>Adding guidance steers trajectories toward the constraint using the operator's
-            gradient — but the correction strength must be hand-tuned. At every scale something
-            breaks: too weak and samples barely improve; stronger settings push samples into
-            the wrong spiral arms entirely.</p>
+            <h3>Inference-Time Guidance Trades One Failure for Another</h3>
+            <p>Guidance uses the gradient of a radial penalty — measuring how far each sample strays from the target arc — to steer unconditional trajectories toward the correct quadrant. But the correction strength α must be hand-tuned, and no setting satisfies both criteria: weak guidance leaves samples on the wrong arc; strong guidance satisfies the radial constraint but pulls them entirely off the spiral. Choosing α means choosing which failure to accept.</p>
           </div>
           <div class="guidance-trio">
             <div class="guidance-item">
               <img src="assets/images/toy_guidance_weak.png" alt="Guidance α=0.5">
-              <p class="guidance-cap">α&thinsp;=&thinsp;0.5 &mdash; too weak</p>
+              <p class="guidance-cap">α&thinsp;=&thinsp;0.5 &mdash; too weak, effectively unconditional</p>
             </div>
             <div class="guidance-item">
               <img src="assets/images/toy_guidance_med.png" alt="Guidance α=2.0">
-              <p class="guidance-cap">α&thinsp;=&thinsp;2.0 &mdash; over-corrected</p>
+              <p class="guidance-cap">α&thinsp;=&thinsp;2.0 &mdash; radial constraint met, but off-manifold</p>
             </div>
             <div class="guidance-item">
               <img src="assets/images/toy_guidance_strong.png" alt="Guidance α=4.0">
-              <p class="guidance-cap">α&thinsp;=&thinsp;4.0 &mdash; structure collapses</p>
+              <p class="guidance-cap">α&thinsp;=&thinsp;4.0 &mdash; structure collapses entirely</p>
             </div>
           </div>
         </div>
@@ -213,10 +201,7 @@
           <div class="story-text">
             <span class="story-tag ours">04</span>
             <h3>FlowBender: Both, Not Either</h3>
-            <p>Trained to read its own alignment error as input, FlowBender learns a nonlinear
-            correction policy — not a scalar guidance weight. Every arm lands tightly on its arc
-            while covering the full extent of the posterior. Fidelity and plausibility,
-            simultaneously, with nothing to tune.</p>
+            <p>Trained to read its own alignment error at each step, FlowBender learns a nonlinear correction policy — not a scalar guidance weight. Samples land in the correct arc and remain on the spiral — both constraints satisfied. Fidelity and plausibility, simultaneously, with nothing to tune.</p>
           </div>
         </div>
       </div>
