@@ -330,7 +330,7 @@
 ================================================================ -->
 <section id="jpeg-results" class="section">
   <div class="container">
-    <h2 class="section-heading">JPEG Restoration — Non-Differentiable Operator</h2>
+    <h2 class="section-heading">JPEG Restoration</h2>
     <p class="section-lead">
       JPEG compression is non-differentiable, making gradient-based guidance inapplicable.
       FlowBender's zero-order variant uses the pixel-space residual between the re-compressed
@@ -394,11 +394,10 @@
   <div class="container">
     <h2 class="section-heading">Results: 3D Mesh Texturing</h2>
     <p class="section-lead">
-      We fine-tune TRELLIS-2 with FlowBender's feedback-aware training on 3D PBR texture
-      generation, evaluated on ObjaverseXL (rows 1–4) and Toys4K (rows 5–8).
-      <em>Ours</em> refers to the x̂<sub>1</sub> feedback variant.
-      The first example per dataset also includes 360° turntable videos — press
-      <i class="fas fa-play" style="font-size:0.75em"></i> to play them together.
+      We fine-tune TRELLIS-2's texture transformer with LoRA for 3D mesh texturing.
+      FlowBender outperforms supervised baselines and inference-time guidance on both condition
+      fidelity and multi-view plausibility; red boxes highlight regions where baselines diverge
+      from the provided condition. Videos show 360° rotations of each asset across all methods.
     </p>
 
     <div class="col-labels cols-5">
