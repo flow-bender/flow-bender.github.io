@@ -552,7 +552,8 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
   border-radius: 8px;
 }
 
-.comparison-row img.ours-img {
+.comparison-row img.ours-img,
+.vid-row-5 > div:nth-child(2) {
   outline: 2.5px solid var(--ours);
   outline-offset: -1px;
 }
