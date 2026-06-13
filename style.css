@@ -552,8 +552,7 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
   border-radius: 8px;
 }
 
-.comparison-row img.ours-img,
-.vid-row-5 > div:nth-child(2) {
+.comparison-row img.ours-img {
   outline: 2.5px solid var(--ours);
   outline-offset: -1px;
 }
@@ -589,15 +588,31 @@ sup { font-size: 0.65em; line-height: 0; position: relative; top: -0.4em; }
   position: relative;
 }
 
-/* Square video container */
-.vid-inner {
+/* Combined 4-wide video spanning columns 2-5 */
+.vid-combined {
+  grid-column: 2 / 6;
+  position: relative;
   border-radius: 8px;
   overflow: hidden;
   background: var(--bg-alt);
 }
-
-.vid-inner .placeholder.video { border-radius: 0; height: auto; aspect-ratio: 1 / 1; }
-.vid-inner video              { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 0; }
+.vid-combined video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 1;
+  object-fit: cover;
+  border-radius: 0;
+}
+/* Green ours outline over the first quarter (ours column) */
+.vid-combined::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 25%;
+  height: 100%;
+  box-shadow: inset 0 0 0 2.5px var(--ours);
+  pointer-events: none;
+}
 
 /* Play button — abs-positioned over the three video columns (cols 2, 3, 5).
    Center of the right 4/5 of a 5-col grid ≈ 60% from left. */
